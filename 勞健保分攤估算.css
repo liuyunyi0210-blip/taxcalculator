@@ -1,0 +1,222 @@
+/* 勞健保分攤估算 CSS 樣式 */
+
+body {
+    font-family: 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+input::placeholder {
+    color: #FFF;
+}
+
+.steps-list {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.two-side-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.two-side-container .col:nth-child(1) {
+    width: 300px;
+}
+
+.two-side-container .col:nth-child(2) {
+    width: calc(100% - 300px);
+}
+
+.step-item {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #fafafa;
+}
+
+.step-title {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #338F8E;
+    padding-bottom: 10px;
+}
+
+.step-inputs input,
+.step-inputs select {
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid #253131;
+    border-radius: 50px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #338F8E;
+    min-width: 400px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.step-inputs select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none;
+}
+
+.step-inputs input:focus {
+    outline: none;
+    border-color: #2a7a79;
+    box-shadow: 0 0 5px rgba(51, 143, 142, 0.3);
+}
+
+.table-container {
+    margin-top: 30px;
+    position: relative;
+}
+
+.table-container #current-salary-with-insurance {
+    background-color: #338f8e;
+    padding: 20px 15px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #fff;
+    border-radius: 5px 5px 0 0;
+}
+
+.table {
+    border-collapse: separate;
+    border-spacing: 15px;
+    table-layout: fixed;
+    margin-left: -15px;
+    width: calc(100% + 30px);
+    border-radius: 0 0 5px 5px;
+    overflow: hidden;
+}
+
+.table tr td {
+    background-color: #ace5c8;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table thead tr * {
+    background-color: #338f8e;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+}
+
+.table tbody tr:nth-child(even) td {
+    background-color: #b8e6d1;
+}
+
+.table tbody tr:nth-child(odd) td {
+    background-color: #ace5c8;
+}
+
+.weight-tr td {
+    font-weight: bold;
+}
+
+.data_title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.no-bg {
+    background-color: transparent !important;
+    border: none !important;
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: normal;
+}
+
+.tool-tutorial {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    border-left: 5px solid #338F8E;
+}
+
+.tutorial-title {
+    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.tool-tutorial ol {
+    color: #555;
+    line-height: 1.6;
+}
+
+.tool-tutorial li {
+    margin-bottom: 10px;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        margin: 10px;
+    }
+    
+    .two-side-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .two-side-container .col:nth-child(1),
+    .two-side-container .col:nth-child(2) {
+        width: 100%;
+    }
+    
+    .step-inputs input,
+    .step-inputs select {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .table {
+        font-size: 0.9rem;
+    }
+    
+    .table tr td,
+    .table thead tr * {
+        padding: 10px 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .step-title {
+        font-size: 1.2rem;
+    }
+    
+    .table {
+        font-size: 0.8rem;
+    }
+    
+    .table tr td,
+    .table thead tr * {
+        padding: 8px 3px;
+    }
+}

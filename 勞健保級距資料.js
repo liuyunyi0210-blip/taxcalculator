@@ -1,0 +1,739 @@
+const ranges = [{
+    "amount": 1500,
+    "labor_insurance_employee": 277,
+    "labor_insurance_employer": 972,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 90,
+    "employee_amount": 720,
+    "employer_amount": 2446
+}, {
+    "amount": 3000,
+    "labor_insurance_employee": 277,
+    "labor_insurance_employer": 972,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 180,
+    "employee_amount": 720,
+    "employer_amount": 2536
+}, {
+    "amount": 4500,
+    "labor_insurance_employee": 277,
+    "labor_insurance_employer": 972,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 270,
+    "employee_amount": 720,
+    "employer_amount": 2626
+}, {
+    "amount": 6000,
+    "labor_insurance_employee": 277,
+    "labor_insurance_employer": 972,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 360,
+    "employee_amount": 720,
+    "employer_amount": 2716
+}, {
+    "amount": 7500,
+    "labor_insurance_employee": 277,
+    "labor_insurance_employer": 972,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 450,
+    "employee_amount": 720,
+    "employer_amount": 2806
+}, {
+    "amount": 8700,
+    "labor_insurance_employee": 277,
+    "labor_insurance_employer": 972,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 522,
+    "employee_amount": 720,
+    "employer_amount": 2878
+}, {
+    "amount": 9900,
+    "labor_insurance_employee": 277,
+    "labor_insurance_employer": 972,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 594,
+    "employee_amount": 720,
+    "employer_amount": 2950
+}, {
+    "amount": 11100,
+    "labor_insurance_employee": 277,
+    "labor_insurance_employer": 972,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 666,
+    "employee_amount": 720,
+    "employer_amount": 3022
+}, {
+    "amount": 12540,
+    "labor_insurance_employee": 313,
+    "labor_insurance_employer": 1097,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 752,
+    "employee_amount": 756,
+    "employer_amount": 3233
+}, {
+    "amount": 13500,
+    "labor_insurance_employee": 338,
+    "labor_insurance_employer": 1182,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 810,
+    "employee_amount": 781,
+    "employer_amount": 3376
+}, {
+    "amount": 15840,
+    "labor_insurance_employee": 396,
+    "labor_insurance_employer": 1386,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 950,
+    "employee_amount": 839,
+    "employer_amount": 3720
+}, {
+    "amount": 16500,
+    "labor_insurance_employee": 413,
+    "labor_insurance_employer": 1444,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 990,
+    "employee_amount": 856,
+    "employer_amount": 3818
+}, {
+    "amount": 17280,
+    "labor_insurance_employee": 432,
+    "labor_insurance_employer": 1512,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1037,
+    "employee_amount": 875,
+    "employer_amount": 3933
+}, {
+    "amount": 17880,
+    "labor_insurance_employee": 447,
+    "labor_insurance_employer": 1564,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1073,
+    "employee_amount": 890,
+    "employer_amount": 4021
+}, {
+    "amount": 19047,
+    "labor_insurance_employee": 476,
+    "labor_insurance_employer": 1666,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1143,
+    "employee_amount": 919,
+    "employer_amount": 4193
+}, {
+    "amount": 20008,
+    "labor_insurance_employee": 500,
+    "labor_insurance_employer": 1751,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1200,
+    "employee_amount": 943,
+    "employer_amount": 4335
+}, {
+    "amount": 21009,
+    "labor_insurance_employee": 525,
+    "labor_insurance_employer": 1838,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1261,
+    "employee_amount": 968,
+    "employer_amount": 4483
+}, {
+    "amount": 22000,
+    "labor_insurance_employee": 550,
+    "labor_insurance_employer": 1925,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1320,
+    "employee_amount": 993,
+    "employer_amount": 4629
+}, {
+    "amount": 23100,
+    "labor_insurance_employee": 577,
+    "labor_insurance_employer": 2022,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1386,
+    "employee_amount": 1020,
+    "employer_amount": 4792
+}, {
+    "amount": 24000,
+    "labor_insurance_employee": 600,
+    "labor_insurance_employer": 2100,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1440,
+    "employee_amount": 1043,
+    "employer_amount": 4924
+}, {
+    "amount": 25250,
+    "labor_insurance_employee": 632,
+    "labor_insurance_employer": 2210,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1515,
+    "employee_amount": 1075,
+    "employer_amount": 5109
+}, {
+    "amount": 26400,
+    "labor_insurance_employee": 660,
+    "labor_insurance_employer": 2310,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1584,
+    "employee_amount": 1103,
+    "employer_amount": 5278
+}, {
+    "amount": 27600,
+    "labor_insurance_employee": 690,
+    "labor_insurance_employer": 2415,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1656,
+    "employee_amount": 1133,
+    "employer_amount": 5455
+}, {
+    "amount": 28590,
+    "labor_insurance_employee": 715,
+    "labor_insurance_employer": 2501,
+    "health_insurance_employee": 443,
+    "health_insurance_employer": 1384,
+    "pension": 1715,
+    "employee_amount": 1158,
+    "employer_amount": 5600
+}, {
+    "amount": 28800,
+    "labor_insurance_employee": 720,
+    "labor_insurance_employer": 2520,
+    "health_insurance_employee": 447,
+    "health_insurance_employer": 1394,
+    "pension": 1728,
+    "employee_amount": 1167,
+    "employer_amount": 5642
+}, {
+    "amount": 30300,
+    "labor_insurance_employee": 758,
+    "labor_insurance_employer": 2651,
+    "health_insurance_employee": 470,
+    "health_insurance_employer": 1466,
+    "pension": 1818,
+    "employee_amount": 1228,
+    "employer_amount": 5935
+}, {
+    "amount": 31800,
+    "labor_insurance_employee": 795,
+    "labor_insurance_employer": 2783,
+    "health_insurance_employee": 493,
+    "health_insurance_employer": 1539,
+    "pension": 1908,
+    "employee_amount": 1288,
+    "employer_amount": 6230
+}, {
+    "amount": 33300,
+    "labor_insurance_employee": 833,
+    "labor_insurance_employer": 2914,
+    "health_insurance_employee": 516,
+    "health_insurance_employer": 1611,
+    "pension": 1998,
+    "employee_amount": 1349,
+    "employer_amount": 6523
+}, {
+    "amount": 34800,
+    "labor_insurance_employee": 870,
+    "labor_insurance_employer": 3045,
+    "health_insurance_employee": 540,
+    "health_insurance_employer": 1684,
+    "pension": 2088,
+    "employee_amount": 1410,
+    "employer_amount": 6817
+}, {
+    "amount": 36300,
+    "labor_insurance_employee": 908,
+    "labor_insurance_employer": 3176,
+    "health_insurance_employee": 563,
+    "health_insurance_employer": 1757,
+    "pension": 2178,
+    "employee_amount": 1471,
+    "employer_amount": 7111
+}, {
+    "amount": 38200,
+    "labor_insurance_employee": 955,
+    "labor_insurance_employer": 3342,
+    "health_insurance_employee": 592,
+    "health_insurance_employer": 1849,
+    "pension": 2292,
+    "employee_amount": 1547,
+    "employer_amount": 7483
+}, {
+    "amount": 40100,
+    "labor_insurance_employee": 1002,
+    "labor_insurance_employer": 3509,
+    "health_insurance_employee": 622,
+    "health_insurance_employer": 1940,
+    "pension": 2406,
+    "employee_amount": 1624,
+    "employer_amount": 7855
+}, {
+    "amount": 42000,
+    "labor_insurance_employee": 1050,
+    "labor_insurance_employer": 3675,
+    "health_insurance_employee": 651,
+    "health_insurance_employer": 2032,
+    "pension": 2520,
+    "employee_amount": 1701,
+    "employer_amount": 8227
+}, {
+    "amount": 43900,
+    "labor_insurance_employee": 1098,
+    "labor_insurance_employer": 3841,
+    "health_insurance_employee": 681,
+    "health_insurance_employer": 2124,
+    "pension": 2634,
+    "employee_amount": 1779,
+    "employer_amount": 8599
+}, {
+    "amount": 45800,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 710,
+    "health_insurance_employer": 2216,
+    "pension": 2748,
+    "employee_amount": 1855,
+    "employer_amount": 8972
+}, {
+    "amount": 48200,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 748,
+    "health_insurance_employer": 2332,
+    "pension": 2892,
+    "employee_amount": 1893,
+    "employer_amount": 9232
+}, {
+    "amount": 50600,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 785,
+    "health_insurance_employer": 2449,
+    "pension": 3036,
+    "employee_amount": 1930,
+    "employer_amount": 9493
+}, {
+    "amount": 53000,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 822,
+    "health_insurance_employer": 2565,
+    "pension": 3180,
+    "employee_amount": 1967,
+    "employer_amount": 9753
+}, {
+    "amount": 55400,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 859,
+    "health_insurance_employer": 2681,
+    "pension": 3324,
+    "employee_amount": 2004,
+    "employer_amount": 10013
+}, {
+    "amount": 57800,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 896,
+    "health_insurance_employer": 2797,
+    "pension": 3468,
+    "employee_amount": 2041,
+    "employer_amount": 10273
+}, {
+    "amount": 60800,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 943,
+    "health_insurance_employer": 2942,
+    "pension": 3648,
+    "employee_amount": 2088,
+    "employer_amount": 10598
+}, {
+    "amount": 63800,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 990,
+    "health_insurance_employer": 3087,
+    "pension": 3828,
+    "employee_amount": 2135,
+    "employer_amount": 10923
+}, {
+    "amount": 66800,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1036,
+    "health_insurance_employer": 3233,
+    "pension": 4008,
+    "employee_amount": 2181,
+    "employer_amount": 11249
+}, {
+    "amount": 69800,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1083,
+    "health_insurance_employer": 3378,
+    "pension": 4188,
+    "employee_amount": 2228,
+    "employer_amount": 11574
+}, {
+    "amount": 72800,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1129,
+    "health_insurance_employer": 3523,
+    "pension": 4368,
+    "employee_amount": 2274,
+    "employer_amount": 11899
+}, {
+    "amount": 76500,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1187,
+    "health_insurance_employer": 3702,
+    "pension": 4590,
+    "employee_amount": 2332,
+    "employer_amount": 12300
+}, {
+    "amount": 80200,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1244,
+    "health_insurance_employer": 3881,
+    "pension": 4812,
+    "employee_amount": 2389,
+    "employer_amount": 12701
+}, {
+    "amount": 83900,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1301,
+    "health_insurance_employer": 4060,
+    "pension": 5034,
+    "employee_amount": 2446,
+    "employer_amount": 13102
+}, {
+    "amount": 87600,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1359,
+    "health_insurance_employer": 4239,
+    "pension": 5256,
+    "employee_amount": 2504,
+    "employer_amount": 13503
+}, {
+    "amount": 92100,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1428,
+    "health_insurance_employer": 4457,
+    "pension": 5526,
+    "employee_amount": 2573,
+    "employer_amount": 13991
+}, {
+    "amount": 96600,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1498,
+    "health_insurance_employer": 4675,
+    "pension": 5796,
+    "employee_amount": 2643,
+    "employer_amount": 14479
+}, {
+    "amount": 101100,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1568,
+    "health_insurance_employer": 4892,
+    "pension": 6066,
+    "employee_amount": 2713,
+    "employer_amount": 14966
+}, {
+    "amount": 105600,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1638,
+    "health_insurance_employer": 5110,
+    "pension": 6336,
+    "employee_amount": 2783,
+    "employer_amount": 15454
+}, {
+    "amount": 110100,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1708,
+    "health_insurance_employer": 5328,
+    "pension": 6606,
+    "employee_amount": 2853,
+    "employer_amount": 15942
+}, {
+    "amount": 115500,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1791,
+    "health_insurance_employer": 5589,
+    "pension": 6930,
+    "employee_amount": 2936,
+    "employer_amount": 16527
+}, {
+    "amount": 120900,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1875,
+    "health_insurance_employer": 5850,
+    "pension": 7254,
+    "employee_amount": 3020,
+    "employer_amount": 17112
+}, {
+    "amount": 126300,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 1959,
+    "health_insurance_employer": 6112,
+    "pension": 7578,
+    "employee_amount": 3104,
+    "employer_amount": 17698
+}, {
+    "amount": 131700,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 2043,
+    "health_insurance_employer": 6373,
+    "pension": 7902,
+    "employee_amount": 3188,
+    "employer_amount": 18283
+}, {
+    "amount": 137100,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 2126,
+    "health_insurance_employer": 6634,
+    "pension": 8226,
+    "employee_amount": 3271,
+    "employer_amount": 18868
+}, {
+    "amount": 142500,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 2210,
+    "health_insurance_employer": 6896,
+    "pension": 8550,
+    "employee_amount": 3355,
+    "employer_amount": 19454
+}, {
+    "amount": 147900,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 2294,
+    "health_insurance_employer": 7157,
+    "pension": 8874,
+    "employee_amount": 3439,
+    "employer_amount": 20039
+}, {
+    "amount": 150000,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 2327,
+    "health_insurance_employer": 7259,
+    "pension": 9000,
+    "employee_amount": 3472,
+    "employer_amount": 20267
+}, {
+    "amount": 156400,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 2426,
+    "health_insurance_employer": 7568,
+    "pension": 9000,
+    "employee_amount": 3571,
+    "employer_amount": 20576
+}, {
+    "amount": 162800,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 2525,
+    "health_insurance_employer": 7878,
+    "pension": 9000,
+    "employee_amount": 3670,
+    "employer_amount": 20886
+}, {
+    "amount": 169200,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 2624,
+    "health_insurance_employer": 8188,
+    "pension": 9000,
+    "employee_amount": 3769,
+    "employer_amount": 21196
+}, {
+    "amount": 175600,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 2724,
+    "health_insurance_employer": 8497,
+    "pension": 9000,
+    "employee_amount": 3869,
+    "employer_amount": 21505
+}, {
+    "amount": 182000,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 2823,
+    "health_insurance_employer": 8807,
+    "pension": 9000,
+    "employee_amount": 3968,
+    "employer_amount": 21815
+}, {
+    "amount": 189500,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 2939,
+    "health_insurance_employer": 9170,
+    "pension": 9000,
+    "employee_amount": 4084,
+    "employer_amount": 22178
+}, {
+    "amount": 197000,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 3055,
+    "health_insurance_employer": 9533,
+    "pension": 9000,
+    "employee_amount": 4200,
+    "employer_amount": 22541
+}, {
+    "amount": 204500,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 3172,
+    "health_insurance_employer": 9896,
+    "pension": 9000,
+    "employee_amount": 4317,
+    "employer_amount": 22904
+}, {
+    "amount": 212000,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 3288,
+    "health_insurance_employer": 10259,
+    "pension": 9000,
+    "employee_amount": 4433,
+    "employer_amount": 23267
+}, {
+    "amount": 219500,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 3404,
+    "health_insurance_employer": 10622,
+    "pension": 9000,
+    "employee_amount": 4549,
+    "employer_amount": 23630
+}, {
+    "amount": 228200,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 3539,
+    "health_insurance_employer": 11043,
+    "pension": 9000,
+    "employee_amount": 4684,
+    "employer_amount": 24051
+}, {
+    "amount": 236900,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 3674,
+    "health_insurance_employer": 11464,
+    "pension": 9000,
+    "employee_amount": 4819,
+    "employer_amount": 24472
+}, {
+    "amount": 245600,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 3809,
+    "health_insurance_employer": 11885,
+    "pension": 9000,
+    "employee_amount": 4954,
+    "employer_amount": 24893
+}, {
+    "amount": 254300,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 3944,
+    "health_insurance_employer": 12306,
+    "pension": 9000,
+    "employee_amount": 5089,
+    "employer_amount": 25314
+}, {
+    "amount": 263000,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 4079,
+    "health_insurance_employer": 12727,
+    "pension": 9000,
+    "employee_amount": 5224,
+    "employer_amount": 25735
+}, {
+    "amount": 273000,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 4234,
+    "health_insurance_employer": 13211,
+    "pension": 9000,
+    "employee_amount": 5379,
+    "employer_amount": 26219
+}, {
+    "amount": 283000,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 4389,
+    "health_insurance_employer": 13695,
+    "pension": 9000,
+    "employee_amount": 5534,
+    "employer_amount": 26703
+}, {
+    "amount": 293000,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 4544,
+    "health_insurance_employer": 14179,
+    "pension": 9000,
+    "employee_amount": 5689,
+    "employer_amount": 27187
+}, {
+    "amount": 303000,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 4700,
+    "health_insurance_employer": 14663,
+    "pension": 9000,
+    "employee_amount": 5845,
+    "employer_amount": 27671
+}, {
+    "amount": 313000,
+    "labor_insurance_employee": 1145,
+    "labor_insurance_employer": 4008,
+    "health_insurance_employee": 4855,
+    "health_insurance_employer": 15146,
+    "pension": 9000,
+    "employee_amount": 6000,
+    "employer_amount": 28154
+}];
