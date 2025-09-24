@@ -1,0 +1,91 @@
+input::placeholder
+{
+	color: #000;
+}
+
+
+.steps-list {
+    max-width: 90%;
+    margin: 0 auto;
+}
+.steps-list #step-1 {
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.steps-list h2 {font-weight: bold}
+.steps-list .step-item{margin: 0 0 30px}
+.step-inputs .input-desc{
+    font-size: 19px;
+    width: 300px;
+    float: left;
+    padding-top: 5px
+}
+.step-inputs input
+{
+    color: #000;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid #253131;
+    border-radius: 50px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #338f8e;
+    min-width: 400px
+}
+
+.step-item{padding-left:15px;padding-right:10px}
+.step-inputs input:focus{outline:none}
+.step-item .step-inputs li:nth-child(even) input,
+.step-item .step-inputs li:nth-child(even) select{background-color: rgb(219, 149, 95)}
+
+.two-side-container {display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:10px;flex-wrap:wrap}
+.two-side-container .col:nth-child(1) {width: 300px}
+.two-side-container .col:nth-child(2) {width: calc(100% - 300px)}
+
+.two-side-container .col label {display:block;width:100%}
+.invoice-type-choices .custom-radio{width:200px}
+
+#step-3{
+    background-size: auto 100%;
+}
+#step-3 .col {
+    width: 50%;
+    border: 5px solid #338f8e;
+    padding:10px;
+}
+
+.fee-main-text{margin:10px 0;font-size:20px;display:flex;justify-content:space-between;align-items:center}
+.fee-main-text span{font-weight:bold}
+
+.tool-tutorial{max-width:90%;margin:50px auto;font-size:14px}
+.tool-tutorial h3{font-weight:normal;margin:0 0 30px}
+.tool-tutorial p:nth-child(odd){margin-bottom:20px}
+
+@media screen and (max-width:900px) {
+    .tool-title{font-size:3.5rem}
+}
+
+@media screen and (max-width:870px) {
+    .steps-list{max-width:100%}
+    .tool-tutorial{max-width:95%}
+}
+
+@media screen and (max-width:795px) {
+    .two-side-container .col:nth-child(2){width:100%;margin-top:10px}
+    .invoice-type-choices .custom-radio{width:calc(50% - 5px)}
+    .step-inputs input{width:100%}
+    #step-3 .col{width:calc(100% - 250px)}
+    #step-3{background-size:200px;background-position:right bottom}
+}
+
+@media screen and (max-width:700px) {
+    .tool-title{font-size:2.5rem}
+    #step-3 .col{width:100%}
+    #step-3{background-image:none}
+}
+
+@media screen and (max-width:500px) {
+    .tool-title{font-size:1.8rem}
+    .step-inputs input{min-width:100%}
+}
