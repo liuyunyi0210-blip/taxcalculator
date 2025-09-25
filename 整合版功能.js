@@ -15,15 +15,19 @@ function initializeSidebar() {
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('mainContent');
     
-    // 側邊選單切換
+    // 側邊選單切換（僅手機版）
     sidebarToggle.addEventListener('click', function() {
-        sidebar.classList.toggle('collapsed');
-        mainContent.classList.toggle('expanded');
+        // 只有在手機版時才允許切換
+        if (window.innerWidth <= 768) {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        }
     });
     
-    // 點擊主內容區域時關閉側邊選單（手機版）
-    mainContent.addEventListener('click', function() {
-        if (window.innerWidth <= 768) {
+    // 點擊主內容區域時關閉側邊選單（僅手機版）
+    mainContent.addEventListener('click', function(e) {
+        // 只有在手機版且點擊的不是選單按鈕時才關閉
+        if (window.innerWidth <= 768 && !e.target.closest('.sidebar-toggle')) {
             sidebar.classList.add('collapsed');
             mainContent.classList.remove('expanded');
         }
@@ -32,8 +36,13 @@ function initializeSidebar() {
     // 視窗大小改變時的處理
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
+            // 桌面版：強制顯示選單，不允許隱藏
             sidebar.classList.remove('collapsed');
             mainContent.classList.remove('expanded');
+        } else {
+            // 手機版：預設隱藏選單
+            sidebar.classList.add('collapsed');
+            mainContent.classList.add('expanded');
         }
     });
 }

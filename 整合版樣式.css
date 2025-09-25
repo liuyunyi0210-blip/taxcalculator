@@ -22,8 +22,8 @@ body {
     left: 0;
     width: 280px;
     height: 100vh;
-    background: linear-gradient(135deg, #338F8E 0%, #2a7a79 100%);
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #d4c4a8 0%, #e8ddd4 50%, #f5f1eb 100%);
+    box-shadow: 2px 0 15px rgba(212, 196, 168, 0.2);
     z-index: 1000;
     transition: transform 0.3s ease;
     overflow-y: auto;
@@ -35,14 +35,15 @@ body {
 
 .sidebar-header {
     padding: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .sidebar-header h2 {
-    color: white;
+    color: #6b5b47;
     font-size: 1.5rem;
     font-weight: bold;
 }
@@ -50,12 +51,19 @@ body {
 .sidebar-toggle {
     background: none;
     border: none;
-    color: white;
+    color: #6b5b47;
     font-size: 1.5rem;
     cursor: pointer;
     padding: 5px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+}
+
+/* 桌面版隱藏選單按鈕 */
+@media (min-width: 769px) {
+    .sidebar-toggle {
+        display: none;
+    }
 }
 
 .sidebar-toggle:hover {
@@ -76,20 +84,22 @@ body {
     display: flex;
     align-items: center;
     padding: 20px;
-    color: white;
+    color: #6b5b47;
     text-decoration: none;
     transition: all 0.3s ease;
     border-left: 4px solid transparent;
 }
 
 .menu-item a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-left-color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-left-color: #d4c4a8;
+    transform: translateX(2px);
 }
 
 .menu-item.active a {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-left-color: white;
+    background-color: rgba(212, 196, 168, 0.3);
+    border-left-color: #d4c4a8;
+    box-shadow: inset 0 0 10px rgba(212, 196, 168, 0.2);
 }
 
 .menu-icon {
@@ -125,9 +135,10 @@ body {
 /* 容器樣式 */
 .container {
     background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(212, 196, 168, 0.08);
     padding: 30px;
+    border: 1px solid rgba(212, 196, 168, 0.1);
 }
 
 /* 步驟列表 */
@@ -157,37 +168,38 @@ body {
 /* 步驟項目 */
 .step-item {
     margin-bottom: 30px;
-    padding: 20px;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    background-color: #fafafa;
+    padding: 25px;
+    border: 1px solid rgba(212, 196, 168, 0.15);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+    box-shadow: 0 2px 8px rgba(212, 196, 168, 0.05);
 }
 
 .step-title {
-    color: #333;
+    color: #6b5b47;
     font-size: 1.5rem;
     margin-bottom: 20px;
-    border-bottom: 2px solid #338F8E;
-    padding-bottom: 10px;
+    border-bottom: 3px solid #d4c4a8;
+    padding-bottom: 12px;
+    font-weight: 600;
 }
 
 /* 輸入欄位樣式 */
 .step-inputs input,
 .step-inputs select {
-    color: #fff;
+    color: #6b5b47;
     font-size: 1rem;
-    padding: 0.5rem 1rem;
-    border: 2px solid #253131;
-    border-radius: 50px;
+    padding: 0.75rem 1.25rem;
+    border: 2px solid #d4c4a8;
+    border-radius: 8px;
     cursor: pointer;
-    text-align: center;
-    background-color: #338F8E;
+    text-align: center !important;
+    text-align-last: center !important;
+    background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
     min-width: 400px;
     width: 100%;
     max-width: 500px;
-}
-
-.step-inputs select {
+    transition: all 0.3s ease;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -196,12 +208,86 @@ body {
 
 .step-inputs input:focus {
     outline: none;
-    border-color: #2a7a79;
-    box-shadow: 0 0 5px rgba(51, 143, 142, 0.3);
+    border-color: #d4c4a8;
+    box-shadow: 0 0 0 3px rgba(212, 196, 168, 0.3);
+    transform: translateY(-1px);
+}
+
+/* 勞健保工具的下拉選單 */
+.take-care-people {
+    color: #6b5b47;
+    font-size: 1rem;
+    padding: 0.75rem 1.25rem;
+    border: 2px solid #d4c4a8;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center !important;
+    text-align-last: center !important;
+    background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+    min-width: 400px;
+    width: 100%;
+    max-width: 500px;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none;
 }
 
 input::placeholder {
-    color: #FFF;
+    color: #9ca3af;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+input:focus::placeholder {
+    opacity: 0;
+}
+
+input:not(:placeholder-shown)::placeholder {
+    opacity: 0;
+}
+
+/* 只讀輸入框樣式 */
+input[readonly] {
+    background: #f3f4f6 !important;
+    color: #6b7280 !important;
+    cursor: not-allowed !important;
+    border-color: #d1d5db !important;
+}
+
+input[readonly]:focus {
+    border-color: #d1d5db !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* 移除數字輸入框的上下箭頭 */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* 確保所有select元素都置中 */
+select {
+    text-align: center !important;
+}
+
+/* 強制所有select和option元素置中 */
+select, select option {
+    text-align: center !important;
+    text-align-last: center !important;
+}
+
+/* 針對特定ID的select元素 */
+#take-care-people, #tax-rate {
+    text-align: center !important;
+    text-align-last: center !important;
 }
 
 /* 表格樣式 */
@@ -211,12 +297,13 @@ input::placeholder {
 }
 
 .table-container #current-salary-with-insurance {
-    background-color: #338f8e;
+    background: linear-gradient(135deg, #d4c4a8 0%, #e8ddd4 100%);
     padding: 20px 15px;
     font-weight: bold;
     font-size: 1.5rem;
-    color: #fff;
-    border-radius: 5px 5px 0 0;
+    color: #6b5b47;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 2px 8px rgba(212, 196, 168, 0.2);
 }
 
 .table {
@@ -230,25 +317,28 @@ input::placeholder {
 }
 
 .table tr td {
-    background-color: #ace5c8;
+    background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
     padding: 15px;
     text-align: center;
     font-weight: bold;
+    border: 1px solid rgba(212, 196, 168, 0.1);
+    color: #6b5b47;
 }
 
 .table thead tr * {
-    background-color: #338f8e;
-    color: #fff;
+    background: linear-gradient(135deg, #d4c4a8 0%, #e8ddd4 100%);
+    color: #6b5b47;
     padding: 15px;
     text-align: center;
+    font-weight: 600;
 }
 
 .table tbody tr:nth-child(even) td {
-    background-color: #b8e6d1;
+    background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
 }
 
 .table tbody tr:nth-child(odd) td {
-    background-color: #ace5c8;
+    background: linear-gradient(135deg, #f9f7f4 0%, #f5f1eb 100%);
 }
 
 .weight-tr td {
@@ -301,13 +391,18 @@ input::placeholder {
     padding-top: 5px;
 }
 
+.step-inputs {
+    list-style: none;
+    padding-left: 0;
+}
+
 .step-inputs li {
     margin: 5px 0;
 }
 
 .step-inputs li:nth-child(even) input,
 .step-inputs li:nth-child(even) select {
-    background-color: rgb(172, 230, 200);
+    background: linear-gradient(135deg, #f9f7f4 0%, #f5f1eb 100%);
 }
 
 #main-invoice-info-steps .input-desc {
@@ -516,16 +611,18 @@ input::placeholder {
 /* 工具說明 */
 .tool-tutorial {
     margin-top: 40px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    border-left: 5px solid #338F8E;
+    padding: 25px;
+    background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+    border-radius: 12px;
+    border-left: 5px solid #d4c4a8;
+    box-shadow: 0 2px 8px rgba(212, 196, 168, 0.05);
 }
 
 .tutorial-title {
-    color: #333;
+    color: #6b5b47;
     font-size: 1.3rem;
     margin-bottom: 15px;
+    font-weight: 600;
 }
 
 .tool-tutorial ol {

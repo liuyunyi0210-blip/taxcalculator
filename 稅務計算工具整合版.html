@@ -208,11 +208,11 @@
                                 <input type="number" step="1" min="0" id="receive-from-customer" placeholder="KEY你要跟客戶收的錢" max="999999999" />
                             </li>
                             <li>
-                                <label for="tax-rate" class="input-desc">2. 稅率：應稅5%/免稅/零稅0% </label>
+                                <label for="tax-rate" class="input-desc">2. 稅率：應稅/零稅率/免稅 </label>
                                 <select id="tax-rate" onchange="changeTaxRate(event)">
-                                    <option value="5">應稅 5%</option>
-                                    <option value="-1">免稅</option>
-                                    <option value="0">零稅 0%</option>
+                                    <option value="5">應稅</option>
+                                    <option value="0">零稅率</option>
+                                    <option value="-1">免稅</option>                        
                                 </select>
                             </li>
                             <li>
