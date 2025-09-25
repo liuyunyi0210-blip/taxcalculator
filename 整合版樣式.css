@@ -1,0 +1,672 @@
+/* 整合版稅務計算工具 CSS 樣式 */
+
+/* 基礎樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* 側邊選單樣式 */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(135deg, #338F8E 0%, #2a7a79 100%);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header h2 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.sidebar-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-item {
+    margin: 0;
+}
+
+.menu-item a {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.menu-item a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left-color: white;
+}
+
+.menu-item.active a {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-left-color: white;
+}
+
+.menu-icon {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    width: 30px;
+    text-align: center;
+}
+
+.menu-text {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* 主內容區域 */
+.main-content {
+    margin-left: 280px;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+    padding: 20px;
+}
+
+.main-content.expanded {
+    margin-left: 0;
+}
+
+/* 工具容器 */
+.tool-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 容器樣式 */
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+/* 步驟列表 */
+.steps-list {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* 兩側容器 */
+.two-side-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.two-side-container .col:nth-child(1) {
+    width: 300px;
+}
+
+.two-side-container .col:nth-child(2) {
+    width: calc(100% - 300px);
+}
+
+/* 步驟項目 */
+.step-item {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #fafafa;
+}
+
+.step-title {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #338F8E;
+    padding-bottom: 10px;
+}
+
+/* 輸入欄位樣式 */
+.step-inputs input,
+.step-inputs select {
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid #253131;
+    border-radius: 50px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #338F8E;
+    min-width: 400px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.step-inputs select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none;
+}
+
+.step-inputs input:focus {
+    outline: none;
+    border-color: #2a7a79;
+    box-shadow: 0 0 5px rgba(51, 143, 142, 0.3);
+}
+
+input::placeholder {
+    color: #FFF;
+}
+
+/* 表格樣式 */
+.table-container {
+    margin-top: 30px;
+    position: relative;
+}
+
+.table-container #current-salary-with-insurance {
+    background-color: #338f8e;
+    padding: 20px 15px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #fff;
+    border-radius: 5px 5px 0 0;
+}
+
+.table {
+    border-collapse: separate;
+    border-spacing: 15px;
+    table-layout: fixed;
+    margin-left: -15px;
+    width: calc(100% + 30px);
+    border-radius: 0 0 5px 5px;
+    overflow: hidden;
+}
+
+.table tr td {
+    background-color: #ace5c8;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table thead tr * {
+    background-color: #338f8e;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+}
+
+.table tbody tr:nth-child(even) td {
+    background-color: #b8e6d1;
+}
+
+.table tbody tr:nth-child(odd) td {
+    background-color: #ace5c8;
+}
+
+.weight-tr td {
+    font-weight: bold;
+}
+
+.data_title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.no-bg {
+    background-color: transparent !important;
+    border: none !important;
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: normal;
+}
+
+/* 發票相關樣式 */
+.invoice-type-choices {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.custom-radio {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.custom-radio input[type="radio"] {
+    margin-right: 8px;
+    width: auto;
+    min-width: auto;
+}
+
+.custom-radio label {
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.step-inputs .input-desc {
+    font-size: 19px;
+    width: 300px;
+    float: left;
+    padding-top: 5px;
+}
+
+.step-inputs li {
+    margin: 5px 0;
+}
+
+.step-inputs li:nth-child(even) input,
+.step-inputs li:nth-child(even) select {
+    background-color: rgb(172, 230, 200);
+}
+
+#main-invoice-info-steps .input-desc {
+    width: 400px;
+}
+
+/* 發票預覽 */
+.invoice-preview {
+    margin: 40px 0;
+}
+
+.invoice-preview .inside-container {
+    overflow-x: auto;
+}
+
+.invoice-preview .inside-container .img-container {
+    position: relative;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.invoice-preview .inside-container::-webkit-scrollbar {
+    height: 5px;
+}
+
+.invoice-preview .inside-container::-webkit-scrollbar-thumb {
+    background: #E97132;
+}
+
+.invoice-preview img {
+    display: block;
+    margin: 0 auto;
+    width: 850px;
+}
+
+/* 發票文字設定 */
+.invoice-text {
+    position: absolute;
+    z-index: 10;
+    color: #E97132;
+    font-weight: bold;
+}
+
+/* 二聯式發票文字位置 */
+#two-section-invoice .tax-apply-check {
+    bottom: 44px;
+    left: 283px;
+}
+
+#two-section-invoice .tax-apply-check.zero-rate {
+    left: 409px;
+}
+
+#two-section-invoice .tax-apply-check.free-rate {
+    left: 527px;
+}
+
+#two-section-invoice .invoice-month {
+    top: 53px;
+    left: 485px;
+    font-size: 18px;
+}
+
+#two-section-invoice .invoice-month-numeric {
+    top: 75px;
+    left: 520px;
+    font-size: 18px;
+}
+
+#two-section-invoice .invoice-date-numeric {
+    top: 75px;
+    left: 567px;
+    font-size: 18px;
+}
+
+#two-section-invoice .invoice-single-item-price {
+    top: 185px;
+    right: 285px;
+    font-size: 20px;
+}
+
+#two-section-invoice .invoice-single-item-price-bottom {
+    bottom: 96px;
+    right: 285px;
+    font-size: 20px;
+}
+
+#two-section-invoice .invoice-single-item-price-upper {
+    bottom: 66px;
+    overflow: hidden;
+    left: 133px;
+    font-size: 19px;
+}
+
+#two-section-invoice .invoice-single-item-price-upper .price {
+    float: left;
+    width: 45px;
+    margin-right: 3px;
+}
+
+/* 三聯式發票文字位置 */
+#three-section-invoice .tax-apply-check {
+    bottom: 119px;
+    left: 250px;
+}
+
+#three-section-invoice .tax-apply-check.zero-rate {
+    left: 320px;
+}
+
+#three-section-invoice .tax-apply-check.free-rate {
+    left: 392px;
+}
+
+#three-section-invoice .invoice-month {
+    top: 55px;
+    left: 450px;
+    font-size: 18px;
+}
+
+#three-section-invoice .invoice-month-numeric {
+    top: 110px;
+    left: 560px;
+    font-size: 18px;
+}
+
+#three-section-invoice .invoice-date-numeric {
+    top: 110px;
+    left: 618px;
+    font-size: 18px;
+}
+
+#three-section-invoice .invoice-single-item-price {
+    top: 198px;
+    right: 275px;
+    font-size: 20px;
+}
+
+#three-section-invoice .invoice-single-item-price-bottom {
+    bottom: 90px;
+    right: 275px;
+    font-size: 20px;
+}
+
+#three-section-invoice .company-name {
+    top: 77px;
+    left: 140px;
+    font-size: 20px;
+}
+
+#three-section-invoice .company-business-id {
+    font-size: 20px;
+    top: 110px;
+    left: 152px;
+    letter-spacing: 20px;
+}
+
+#three-section-invoice .invoice-single-item-price-upper {
+    bottom: 55px;
+    overflow: hidden;
+    left: 141px;
+    font-size: 19px;
+}
+
+#three-section-invoice .invoice-single-item-price-upper .price {
+    float: left;
+    width: 46px;
+    margin-right: 3px;
+}
+
+#two-section-invoice .default-item {
+    top: 190px;
+    left: 50px;
+}
+
+#three-section-invoice .default-item {
+    top: 195px;
+    left: 70px;
+}
+
+#three-section-invoice .inovice-tax-total {
+    right: 275px;
+    bottom: 128px;
+    font-size: 18px;
+}
+
+#three-section-invoice .sale-price-subtotal {
+    right: 275px;
+    bottom: 160px;
+    font-size: 18px;
+}
+
+/* 租金工具樣式 */
+.fee-main-text {
+    margin: 10px 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fee-main-text span {
+    font-weight: bold;
+}
+
+/* 工具說明 */
+.tool-tutorial {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    border-left: 5px solid #338F8E;
+}
+
+.tutorial-title {
+    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.tool-tutorial ol {
+    color: #555;
+    line-height: 1.6;
+}
+
+.tool-tutorial li {
+    margin-bottom: 10px;
+}
+
+.tool-tutorial ul {
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.tool-tutorial p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* 工具類 */
+.d-none {
+    display: none !important;
+}
+
+.d-block {
+    display: block !important;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+
+/* 響應式設計 */
+@media (max-width: 1200px) {
+    .sidebar {
+        width: 250px;
+    }
+    
+    .main-content {
+        margin-left: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 15px;
+        margin: 10px;
+    }
+    
+    .two-side-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .two-side-container .col:nth-child(1),
+    .two-side-container .col:nth-child(2) {
+        width: 100%;
+    }
+    
+    .step-inputs input,
+    .step-inputs select {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .table {
+        font-size: 0.9rem;
+    }
+    
+    .table tr td,
+    .table thead tr * {
+        padding: 10px 5px;
+    }
+    
+    .step-inputs .input-desc {
+        width: 200px;
+        float: none;
+    }
+    
+    .step-inputs input,
+    .step-inputs select {
+        display: block;
+        margin-top: 5px;
+        width: 100%;
+    }
+    
+    .invoice-preview img {
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    .invoice-type-choices {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .custom-radio {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .step-title {
+        font-size: 1.2rem;
+    }
+    
+    .table {
+        font-size: 0.8rem;
+    }
+    
+    .table tr td,
+    .table thead tr * {
+        padding: 8px 3px;
+    }
+    
+    .sidebar-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    .menu-text {
+        font-size: 0.9rem;
+    }
+    
+    .menu-icon {
+        font-size: 1.2rem;
+        margin-right: 10px;
+    }
+}

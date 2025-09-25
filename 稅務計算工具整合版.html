@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>稅務計算工具整合版</title>
+    <link rel="stylesheet" href="整合版樣式.css">
+</head>
+<body>
+    <!-- 側邊選單 -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>稅務計算工具</h2>
+            <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="menu-item active" data-tool="labor-health">
+                <a href="#" onclick="switchTool('labor-health')">
+                    <span class="menu-icon">🏥</span>
+                    <span class="menu-text">勞健保分攤估算</span>
+                </a>
+            </li>
+            <li class="menu-item" data-tool="invoice">
+                <a href="#" onclick="switchTool('invoice')">
+                    <span class="menu-icon">📄</span>
+                    <span class="menu-text">開立發票模擬</span>
+                </a>
+            </li>
+            <li class="menu-item" data-tool="rent-tax">
+                <a href="#" onclick="switchTool('rent-tax')">
+                    <span class="menu-icon">🏠</span>
+                    <span class="menu-text">租金扣繳稅金&二健估算</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 主內容區域 -->
+    <main class="main-content" id="mainContent">
+        <!-- 勞健保分攤估算工具 -->
+        <div class="tool-container" id="labor-health-tool">
+            <div class="container">
+                <div class="steps-list">
+                    <div id="step-1" class="step-item step-inputs two-side-container">
+                        <div class="col">
+                            <h2 class="step-title">STEP1 月薪</h2>
+                        </div>
+                        <div class="col">
+                            <input type="number" step="1" min="0" id="salary-monthly" placeholder="輸入您的月薪" max="999999999" />
+                        </div>
+                    </div>
+                    <div class="step-item step-inputs" id="step-2">
+                        <h2 class="step-title">STEP2 扶養眷屬</h2>
+                        <div class="two-side-container">
+                            <div class="col">
+                                <label for="take-care-people" style="font-size:1.2rem">扶養眷屬:</label>
+                            </div>
+                            <div class="col">
+                                <select class="take-care-people" id="take-care-people">
+                                    <option value="1">本人</option>
+                                    <option value="2">本人+1眷屬</option>
+                                    <option value="3">本人+2眷屬</option>
+                                    <option value="4">本人+3眷屬</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-item" id="step-3">
+                        <h2 class="step-title">STEP3 小幫手幫您把勞健保退休金算出來</h2>
+                        <div class="table-container">
+                            <div id="current-salary-with-insurance">投保薪資為: NT$<span id="salary"></span></div>
+                            <div class="table-wrapper">
+                                <table class="table w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>社會保險</th>
+                                            <th>勞健保<br />投保級距</th>
+                                            <th>員工負擔</th>
+                                            <th>公司負擔</th>
+                                            <th>合計</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>勞保</td>
+                                            <td rowspan="4">
+                                                <div class="data_title"><span id="range_from">0</span> ~ <span id="range_to">0</span></div>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="labor_insurance_employee"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="labor_insurance_employer"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="labor_insurance_subtotal"></span>
+                                            </td>
+                                        </tr>
+                                        <tr class="weight-tr">
+                                            <td>健保</td>
+                                            <td>
+                                                NT$
+                                                <span id="health_insurance_employee"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="health_insurance_employer"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="health_insurance_subtotal"></span>
+                                            </td>
+                                        </tr>
+                                        <tr class="weight-tr">
+                                            <td>退休金</td>
+                                            <td>0</td>
+                                            <td>
+                                                NT$
+                                                <span id="pension"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="pension_subtotal"></span>
+                                            </td>
+                                        </tr>
+                                        <tr class="weight-tr">
+                                            <td>合計</td>
+                                            <td>
+                                                NT$
+                                                <span id="employee_amount"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="employer_amount"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="final_total"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="no-bg"></td>
+                                            <td class="no-bg"></td>
+                                            <td class="no-bg">
+                                                <span>代表薪資條裡面<br />要扣掉的錢</span>
+                                            </td>
+                                            <td class="no-bg">
+                                                <span>代表公司要負擔的<br />社會保險成本</span>
+                                            </td>
+                                            <td class="no-bg"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+                <div class="tool-tutorial">
+                    <h3 class="tutorial-title">說明：</h3>
+                    <ol>
+                        <li>計算單位：月。</li>
+                        <li>勞工保險（勞保）為雇主負擔70%、員工負擔20%、政府負擔10%；此表尚未包含工資墊償基金、職業災害保險費，職業災害保險費率依投保單位行業別而有不同，請按繳款單所列職業災害保險費率自行計算，並請依規定職業災害保險費全部由投保單位負擔。</li>
+                        <li>全民健康保險(健保)為雇主負擔60%、員工負擔30%、政府負擔10%。</li>
+                        <li>勞工退休金月提繳基礎為：雇主提撥6%；假設員工不自提。</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- 開立發票模擬工具 -->
+        <div class="tool-container" id="invoice-tool" style="display: none;">
+            <div class="container">
+                <div class="steps-list" id="invoice-tool-steps">
+                    <div id="invoice-step-1">
+                        <h2 class="step-title">STEP1選發票要開給誰</h2>
+                        <div class="invoice-type-choices">
+                            <div class="custom-radio">
+                                <input type="radio" id="three-section" name="invoice" value="company">
+                                <label for="three-section">三聯式發票(開給公司)</label>
+                            </div>
+                            <div class="custom-radio">
+                                <input type="radio" id="two-section" name="invoice" value="personal" checked="true" />
+                                <label for="two-section">二聯式發票 (開給個人)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-item d-none" id="invoice-step-2">
+                        <h2 class="step-title">STEP2基本資訊</h2>
+                        <ol class="step-inputs">
+                            <li>
+                                <label for="company-name" class="input-desc">1. 公司名稱(抬頭)：</label>
+                                <input type="text" id="company-name" placeholder="KEY你客戶的公司名" />
+                            </li>
+                            <li>
+                                <label for="company-business-id" class="input-desc">2. 公司統編：</label>
+                                <input type="text" id="company-business-id" placeholder="KEY你客戶的統編" maxlength="8" />
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="step-item" id="invoice-step-3">
+                        <h2 class="step-title">STEP2發票開立資訊</h2>
+                        <ol class="step-inputs" id="main-invoice-info-steps">
+                            <li>
+                                <label for="receive-from-customer" class="input-desc">1. 和客戶的收款金額(含稅價)：</label>
+                                <input type="number" step="1" min="0" id="receive-from-customer" placeholder="KEY你要跟客戶收的錢" max="999999999" />
+                            </li>
+                            <li>
+                                <label for="tax-rate" class="input-desc">2. 稅率：應稅5%/免稅/零稅0% </label>
+                                <select id="tax-rate" onchange="changeTaxRate(event)">
+                                    <option value="5">應稅 5%</option>
+                                    <option value="-1">免稅</option>
+                                    <option value="0">零稅 0%</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label for="tax-money" class="input-desc">3. 稅額：</label>
+                                <input type="number" step="1" min="0" id="tax-money" readonly />
+                            </li>
+                            <li>
+                                <label for="sale-price" class="input-desc">4. 銷售金額(未稅價)：</label>
+                                <input type="number" step="1" min="0" id="sale-price" readonly />
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="invoice-preview">
+                    <div class="inside-container">
+                        <div class="img-container" id="two-section-invoice">
+                            <img src="https://asdnas.com/2/images/two-section-invoice.jpg" class="d-block" />
+                            <div class="invoice-text default-item">填上品項</div>
+                            <div class="invoice-text tax-apply-check">V</div>
+                            <div class="invoice-text invoice-month">一、二</div>
+                            <div class="invoice-text invoice-month-numeric">1</div>
+                            <div class="invoice-text invoice-date-numeric">1</div>
+                            <div class="invoice-text invoice-single-item-price">0</div>
+                            <div class="invoice-text invoice-single-item-price-bottom">0</div>
+                            <div class="invoice-text invoice-single-item-price-upper">
+                                <div class="price hundred-million">零</div>
+                                <div class="price ten-million">零</div>
+                                <div class="price one-million">零</div>
+                                <div class="price hundred-thousand-million">零</div>
+                                <div class="price ten-thousand">零</div>
+                                <div class="price thousand">零</div>
+                                <div class="price hundred">零</div>
+                                <div class="price ten">零</div>
+                                <div class="price unit">零</div>
+                            </div>
+                        </div>
+                        <div class="img-container d-none" id="three-section-invoice">
+                            <img src="https://asdnas.com/2/images/three-section-invoice.jpg" class="d-block" />
+                            <div class="invoice-text default-item">填上品項</div>
+                            <div class='invoice-text company-name'></div>
+                            <div class="invoice-text company-business-id"></div>
+                            <div class="invoice-text tax-apply-check">V</div>
+                            <div class="invoice-text invoice-month">一、二</div>
+                            <div class="invoice-text invoice-month-numeric">1</div>
+                            <div class="invoice-text invoice-date-numeric">1</div>
+                            <div class="invoice-text invoice-single-item-price">0</div>
+                            <div class="invoice-text sale-price-subtotal"></div>
+                            <div class="invoice-text inovice-tax-total"></div>
+                            <div class="invoice-text invoice-single-item-price-bottom">0</div>
+                            <div class="invoice-text invoice-single-item-price-upper">
+                                <div class="price hundred-million">零</div>
+                                <div class="price ten-million">零</div>
+                                <div class="price one-million">零</div>
+                                <div class="price hundred-thousand-million">零</div>
+                                <div class="price ten-thousand">零</div>
+                                <div class="price thousand">零</div>
+                                <div class="price hundred">零</div>
+                                <div class="price ten">零</div>
+                                <div class="price unit">零</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-tutorial">
+                    <h3 class="tutorial-title">手開發票步驟</h3>
+                    <ol>
+                        <li>
+                            選對聯式：
+                            <ul>
+                                <li>二聯式：一般消費者使用，不需買方統編。</li>
+                                <li>三聯式：B2B交易，需買方提供統編報帳。</li>
+                            </ul>
+                        </li>
+                        <li>
+                            填寫內容：
+                            <ul>
+                                <li>日期：例如「114年01月21日」。</li>
+                                <li>買方資訊：若是三聯式，填寫買方統編與名稱；二聯式可不填。</li>
+                                <li>金額：銷售額(未稅)、營業稅金額、總計(含稅金額)；二聯式不區分出營業稅額。</li>
+                                <li>銷售內容：例如顧問服務、服飾一批等依實際銷售內容填寫。</li>
+                            </ul>
+                        </li>
+                        <li>蓋發票章：確認無誤後蓋章。</li>
+                        <li>保存及交付發票：第一聯存根聯自行保留、第二聯扣抵聯及第三聯收執聯交給客戶。</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- 租金扣繳稅金&二健估算工具 -->
+        <div class="tool-container" id="rent-tax-tool" style="display: none;">
+            <div class="container">
+                <div class="steps-list">
+                    <div id="rent-step-1" class="step-item two-side-container">
+                        <div class="col">
+                            <h2 class="step-title">STEP1房東是誰</h2>
+                        </div>
+                        <div class="col">
+                            <div class="invoice-type-choices">
+                                <div class="custom-radio">
+                                    <input type="radio" id="personal-landlord" name="landlord" value="personal" checked="true" />
+                                    <label for="personal-landlord">個人</label>
+                                </div>
+                                <div class="custom-radio">
+                                    <input type="radio" id="company-landlord" name="landlord" value="company" />
+                                    <label for="company-landlord">公司</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-item" id="rent-step-2">
+                        <h2 class="step-title">STEP2每期租金</h2>
+                        <div class="step-inputs">
+                            <div class="two-side-container">
+                                <div class="col">
+                                    <label for="monthly-renting-fee" class="input-desc">1. 租金金額：</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" step="1" min="0" id="monthly-renting-fee" placeholder="租金金額" oninput="updateRentingFee(event)" />
+                                </div>
+                            </div>
+                            <div class="two-side-container">
+                                <div class="col">
+                                    <label for="company-business-id" class="input-desc">2. 含稅/未稅：</label>
+                                </div>
+                                <div class="col invoice-type-choices">
+                                    <div class="custom-radio">
+                                        <input type="radio" id="including" name="tax-policy" value="including" checked="true" />
+                                        <label for="including">含稅</label>
+                                    </div>
+                                    <div class="custom-radio">
+                                        <input type="radio" id="excluding" name="tax-policy" value="excluding" />
+                                        <label for="excluding">未稅</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-item" id="rent-step-3">
+                        <div class="col">
+                            <h2 class="step-title">STEP3租金</h2>
+                            <div id="personal-landlord-ticket">
+                                <p class="fee-main-text">＊ 實際應申報金額（含稅）<span id="actual-apply-money">$0</span></p>
+                                <p class="fee-main-text">＊ 扣繳 10% <span id="discount-money">$0</span></p>
+                                <p class="fee-main-text">＊ 二代健保 2.11% <span id="second-generation-healthy">$0</span></p>
+                                <p class="fee-main-text">＊ 租扣二代總金額 <span id="whole-discount-money">$0</span></p>
+                                <p class="fee-main-text">＊ 實際支付租金（未稅）<span id="actual-pay-money">$0</span></p>
+                            </div>
+                            <div id="company-landlord-ticket" class="d-none">
+                                <h4>記得要跟房東索取租金發票金額為</h4>
+                                <p class="fee-main-text">銷售額 <span id="sale-price">$0</span></p>
+                                <p class="fee-main-text">稅額 <span id="tax-price">$0</span></p>
+                                <p class="fee-main-text">總金額 <span id="total-price">$0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-tutorial">
+                    <h3 class="tutorial-title">說明：「租金扣繳稅款」及「二代健保補充保費」怎麼算?</h3>
+                    <p><strong>A.辦理租金扣繳稅款</strong></p>
+                    <p>根據《各類所得扣繳率標準》第二條第一項規定，納稅義務人如為中華民國境內居住之個人，或在中華民國境內有固定營業場所之營利事業，按下列規定扣繳：租金按給付額扣取百分之十。</p>
+                    <p><strong>B.二代健保補充保費</strong></p>
+                    <p>依照全民健康保險扣取及繳納補充保險費辦法規定，租金收入單次付款超過2萬元，需要扣取2.11％的費用作為二代健保補充保費。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="勞健保級距資料.js"></script>
+    <script type="text/javascript" src="勞健保計算邏輯.js"></script>
+    <script type="text/javascript" src="開立發票模擬.js"></script>
+    <script type="text/javascript" src="租金扣繳稅金二健估算.js"></script>
+    <script type="text/javascript" src="整合版功能.js"></script>
+</body>
+</html>
