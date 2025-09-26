@@ -23,13 +23,13 @@
             <li class="menu-item" data-tool="invoice">
                 <a href="#" onclick="switchTool('invoice')">
                     <span class="menu-icon">📄</span>
-                    <span class="menu-text">開立發票模擬</span>
+                    <span class="menu-text">模擬開立B2B發票</span>
                 </a>
             </li>
             <li class="menu-item" data-tool="rent-tax">
                 <a href="#" onclick="switchTool('rent-tax')">
                     <span class="menu-icon">🏠</span>
-                    <span class="menu-text">租金扣繳稅金&二健估算</span>
+                    <span class="menu-text">租金扣繳稅金估算</span>
                 </a>
             </li>
         </ul>
@@ -43,14 +43,14 @@
                 <div class="steps-list">
                     <div id="step-1" class="step-item step-inputs two-side-container">
                         <div class="col">
-                            <h2 class="step-title">STEP1 月薪</h2>
+                            <h2 class="step-title">輸入您的月薪</h2>
                         </div>
                         <div class="col">
                             <input type="number" step="1" min="0" id="salary-monthly" placeholder="輸入您的月薪" max="999999999" />
                         </div>
                     </div>
                     <div class="step-item step-inputs" id="step-2">
-                        <h2 class="step-title">STEP2 扶養眷屬</h2>
+                        <h2 class="step-title">選擇您的扶養眷屬人數</h2>
                         <div class="two-side-container">
                             <div class="col">
                                 <label for="take-care-people" style="font-size:1.2rem">扶養眷屬:</label>
@@ -58,15 +58,15 @@
                             <div class="col">
                                 <select class="take-care-people" id="take-care-people">
                                     <option value="1">本人</option>
-                                    <option value="2">本人+1眷屬</option>
-                                    <option value="3">本人+2眷屬</option>
-                                    <option value="4">本人+3眷屬</option>
+                                    <option value="2">本人及1眷屬</option>
+                                    <option value="3">本人及2眷屬</option>
+                                    <option value="4">本人及3眷屬</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="step-item" id="step-3">
-                        <h2 class="step-title">STEP3 小幫手幫您把勞健保退休金算出來</h2>
+                        <h2 class="step-title">計算結果</h2>
                         <div class="table-container">
                             <div id="current-salary-with-insurance">投保薪資為: NT$<span id="salary"></span></div>
                             <div class="table-wrapper">
@@ -145,10 +145,10 @@
                                             <td class="no-bg"></td>
                                             <td class="no-bg"></td>
                                             <td class="no-bg">
-                                                <span>代表薪資條裡面<br />要扣掉的錢</span>
+                                                <span>薪資條裡面的<br />減項金額</span>
                                             </td>
                                             <td class="no-bg">
-                                                <span>代表公司要負擔的<br />社會保險成本</span>
+                                                <span>公司要負擔的<br />社會保險成本</span>
                                             </td>
                                             <td class="no-bg"></td>
                                         </tr>
@@ -164,7 +164,7 @@
                         <li>計算單位：月。</li>
                         <li>勞工保險（勞保）為雇主負擔70%、員工負擔20%、政府負擔10%；此表尚未包含工資墊償基金、職業災害保險費，職業災害保險費率依投保單位行業別而有不同，請按繳款單所列職業災害保險費率自行計算，並請依規定職業災害保險費全部由投保單位負擔。</li>
                         <li>全民健康保險(健保)為雇主負擔60%、員工負擔30%、政府負擔10%。</li>
-                        <li>勞工退休金月提繳基礎為：雇主提撥6%；假設員工不自提。</li>
+                        <li>勞工退休金月提繳基礎為：雇主提撥6%；假設員工無自提比例。</li>
                     </ol>
                 </div>
             </div>
@@ -175,7 +175,7 @@
             <div class="container">
                 <div class="steps-list" id="invoice-tool-steps">
                     <div id="invoice-step-1">
-                        <h2 class="step-title">STEP1選發票要開給誰</h2>
+                        <h2 class="step-title">選擇發票要開立對象</h2>
                         <div class="invoice-type-choices">
                             <div class="custom-radio">
                                 <input type="radio" id="three-section" name="invoice" value="company">
@@ -188,7 +188,7 @@
                         </div>
                     </div>
                     <div class="step-item d-none" id="invoice-step-2">
-                        <h2 class="step-title">STEP2基本資訊</h2>
+                        <h2 class="step-title">輸入基本資訊</h2>
                         <ol class="step-inputs">
                             <li>
                                 <label for="company-name" class="input-desc">1. 公司名稱(抬頭)：</label>
@@ -201,7 +201,7 @@
                         </ol>
                     </div>
                     <div class="step-item" id="invoice-step-3">
-                        <h2 class="step-title">STEP2發票開立資訊</h2>
+                        <h2 class="step-title">輸入發票開立資訊</h2>
                         <ol class="step-inputs" id="main-invoice-info-steps">
                             <li>
                                 <label for="receive-from-customer" class="input-desc">1. 和客戶的收款金額(含稅價)：</label>
@@ -230,7 +230,7 @@
                     <div class="inside-container">
                         <div class="img-container" id="two-section-invoice">
                             <img src="https://asdnas.com/2/images/two-section-invoice.jpg" class="d-block" />
-                            <div class="invoice-text default-item">填上品項</div>
+                            <div class="invoice-text default-item">填寫品項</div>
                             <div class="invoice-text tax-apply-check">V</div>
                             <div class="invoice-text invoice-month">一、二</div>
                             <div class="invoice-text invoice-month-numeric">1</div>
@@ -283,13 +283,13 @@
                             選對聯式：
                             <ul>
                                 <li>二聯式：一般消費者使用，不需買方統編。</li>
-                                <li>三聯式：B2B交易，需買方提供統編報帳。</li>
+                                <li>三聯式：企業間交易，需買方提供統編報帳。</li>
                             </ul>
                         </li>
                         <li>
                             填寫內容：
                             <ul>
-                                <li>日期：例如「114年01月21日」。</li>
+                                <li>日期：例如「114年01月01日」。</li>
                                 <li>買方資訊：若是三聯式，填寫買方統編與名稱；二聯式可不填。</li>
                                 <li>金額：銷售額(未稅)、營業稅金額、總計(含稅金額)；二聯式不區分出營業稅額。</li>
                                 <li>銷售內容：例如顧問服務、服飾一批等依實際銷售內容填寫。</li>
@@ -308,7 +308,7 @@
                 <div class="steps-list">
                     <div id="rent-step-1" class="step-item two-side-container">
                         <div class="col">
-                            <h2 class="step-title">STEP1房東是誰</h2>
+                            <h2 class="step-title">選擇房東類型</h2>
                         </div>
                         <div class="col">
                             <div class="invoice-type-choices">
@@ -324,7 +324,7 @@
                         </div>
                     </div>
                     <div class="step-item" id="rent-step-2">
-                        <h2 class="step-title">STEP2每期租金</h2>
+                        <h2 class="step-title">輸入每期租金</h2>
                         <div class="step-inputs">
                             <div class="two-side-container">
                                 <div class="col">
@@ -353,7 +353,7 @@
                     </div>
                     <div class="step-item" id="rent-step-3">
                         <div class="col">
-                            <h2 class="step-title">STEP3租金</h2>
+                            <h2 class="step-title">計算租金結果</h2>
                             <div id="personal-landlord-ticket">
                                 <p class="fee-main-text">＊ 實際應申報金額（含稅）<span id="actual-apply-money">$0</span></p>
                                 <p class="fee-main-text">＊ 扣繳 10% <span id="discount-money">$0</span></p>
@@ -362,7 +362,7 @@
                                 <p class="fee-main-text">＊ 實際支付租金（未稅）<span id="actual-pay-money">$0</span></p>
                             </div>
                             <div id="company-landlord-ticket" class="d-none">
-                                <h4>記得要跟房東索取租金發票金額為</h4>
+                                <h4>若需要，向房東索取的租金發票金額為</h4>
                                 <p class="fee-main-text">銷售額 <span id="sale-price">$0</span></p>
                                 <p class="fee-main-text">稅額 <span id="tax-price">$0</span></p>
                                 <p class="fee-main-text">總金額 <span id="total-price">$0</span></p>
