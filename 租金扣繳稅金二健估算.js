@@ -9,7 +9,7 @@ const discountRate = 0.1;
 const secondGenerationHealthyMoneyRate = 0.0211;
 
 function resetWholeTickets(){
-	['sale', 'tax', 'total'].forEach( domId => {
+	['rent-sale', 'rent-tax', 'rent-total'].forEach( domId => {
 		const $textItem = document.getElementById(`${domId}-price`);
 		$textItem.textContent = "$0";
 	})
@@ -39,9 +39,9 @@ function findHouseOwner(){
 function setCompanyRentineFee(sale, tax, total){
 	const values = { sale, tax, total };
 
-	['sale', 'tax', 'total'].forEach( domId => {
+	['rent-sale', 'rent-tax', 'rent-total'].forEach( domId => {
 		const $textItem = document.getElementById(`${domId}-price`);
-		$textItem.textContent = `$${values[domId].toLocaleString()}`;
+		$textItem.textContent = `$${values[domId.replace('rent-', '')].toLocaleString()}`;
 	})
 }
 
@@ -52,12 +52,12 @@ function updateRentingFee(event = null){
 	let actualPayMoney = 0;
 	let wholeDiscountMoney = 0;
 
-	let eventTargetValue = parseInt(event ? event.target.value : document.getElementById('monthly-renting-fee').value) || 0;
-	let applyMoney = Math.max(eventTargetValue, 0);
+	let eventTargetValue = parseInt(event ? event.target.value : document.getElementById('monthly-renting-fee').value);
 	if (isNaN(eventTargetValue)) {
 		resetWholeTickets();
 		return;
 	}
+	let applyMoney = Math.max(eventTargetValue, 0);
 
 	let displayMoney = parseInt(eventTargetValue < 0 ? 0 : eventTargetValue);
 	document.getElementById('monthly-renting-fee').value = displayMoney;
@@ -65,14 +65,16 @@ function updateRentingFee(event = null){
 	let taxFee;
 	if (whoIsHouseOwner === 'company') {
 		if (!includingTax) {
-			actualPayMoney = Math.round(applyMoney * 1.05);
-			taxFee = Math.round(actualPayMoney - applyMoney);
+			// 未含稅：applyMoney 是銷售額，需要計算稅額和總金額
+			taxFee = Math.round(applyMoney * 0.05);
+			actualPayMoney = applyMoney + taxFee;
 			setCompanyRentineFee(applyMoney, taxFee, actualPayMoney);
 		} else {
+			// 含稅：applyMoney 是總金額，需要計算銷售額和稅額
 			actualPayMoney = applyMoney;
 			taxFee = Math.round(applyMoney / 1.05 * 0.05);
-			applyMoney = applyMoney - taxFee;
-			setCompanyRentineFee(applyMoney, taxFee, actualPayMoney);
+			let saleAmount = applyMoney - taxFee;
+			setCompanyRentineFee(saleAmount, taxFee, actualPayMoney);
 		}
 		return;
 	}

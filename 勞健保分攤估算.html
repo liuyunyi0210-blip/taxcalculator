@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勞健保分攤估算</title>
+    <link rel="stylesheet" href="整合版樣式.css">
+</head>
+<body>
+    <!-- 主內容區域 -->
+    <main class="main-content" id="mainContent" style="margin-left: 0;">
+        <!-- 勞健保分攤估算工具 -->
+        <div class="tool-container" id="labor-health-tool">
+            <div class="container">
+                <div class="steps-list">
+                    <div id="step-1" class="step-item">
+                        <h2 class="step-title">輸入您的月薪</h2>
+                        <div class="two-side-container">
+                            <div class="col">
+                                <label for="salary-monthly" style="font-size:1.2rem">月薪:</label>
+                            </div>
+                            <div class="col">
+                                <input type="number" step="1" min="0" id="salary-monthly" placeholder="輸入您的月薪" max="999999999" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-item" id="step-2">
+                        <h2 class="step-title">選擇您的扶養眷屬人數</h2>
+                        <div class="two-side-container">
+                            <div class="col">
+                                <label for="take-care-people" style="font-size:1.2rem">扶養眷屬:</label>
+                            </div>
+                            <div class="col">
+                                <select class="take-care-people" id="take-care-people">
+                                    <option value="1">本人</option>
+                                    <option value="2">本人及1眷屬</option>
+                                    <option value="3">本人及2眷屬</option>
+                                    <option value="4">本人及3眷屬</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-item" id="step-3">
+                        <h2 class="step-title">計算結果</h2>
+                        <div class="table-container">
+                            <div id="current-salary-with-insurance">投保薪資為: NT$<span id="salary"></span></div>
+                            <div class="table-wrapper">
+                                <table class="table w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>社會保險</th>
+                                            <th>勞健保<br />投保級距</th>
+                                            <th>員工負擔</th>
+                                            <th>公司負擔</th>
+                                            <th>合計</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>勞保</td>
+                                            <td rowspan="4">
+                                                <div class="data_title"><span id="range_from">0</span> ~ <span id="range_to">0</span></div>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="labor_insurance_employee"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="labor_insurance_employer"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="labor_insurance_subtotal"></span>
+                                            </td>
+                                        </tr>
+                                        <tr class="weight-tr">
+                                            <td>健保</td>
+                                            <td>
+                                                NT$
+                                                <span id="health_insurance_employee"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="health_insurance_employer"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="health_insurance_subtotal"></span>
+                                            </td>
+                                        </tr>
+                                        <tr class="weight-tr">
+                                            <td>退休金</td>
+                                            <td>不提撥</td>
+                                            <td>
+                                                NT$
+                                                <span id="pension"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="pension_subtotal"></span>
+                                            </td>
+                                        </tr>
+                                        <tr class="weight-tr">
+                                            <td>合計</td>
+                                            <td>
+                                                NT$
+                                                <span id="employee_amount"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="employer_amount"></span>
+                                            </td>
+                                            <td>
+                                                NT$
+                                                <span id="final_total"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="no-bg"></td>
+                                            <td class="no-bg"></td>
+                                            <td class="no-bg">
+                                                <span>薪資條裡面的<br />減項金額</span>
+                                            </td>
+                                            <td class="no-bg">
+                                                <span>公司要負擔的<br />社會保險成本</span>
+                                            </td>
+                                            <td class="no-bg"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+                <div class="tool-tutorial">
+                    <h3 class="tutorial-title">說明：</h3>
+                    <ol>
+                        <li>計算單位：月。</li>
+                        <li>勞工保險（勞保）為雇主負擔70%、員工負擔20%、政府負擔10%；此表尚未包含工資墊償基金、職業災害保險費，職業災害保險費率依投保單位行業別而有不同，請按繳款單所列職業災害保險費率自行計算，並請依規定職業災害保險費全部由投保單位負擔。</li>
+                        <li>全民健康保險(健保)為雇主負擔60%、員工負擔30%、政府負擔10%。</li>
+                        <li>勞工退休金月提繳基礎為：雇主提撥6%；假設員工無自提比例。</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="勞健保級距資料.js"></script>
+    <script type="text/javascript" src="勞健保計算邏輯.js"></script>
+</body>
+</html>
