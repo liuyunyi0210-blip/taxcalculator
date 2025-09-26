@@ -97,20 +97,18 @@ function updateRentingFee(event = null){
 	if (!needsCalculation) {
 	    actualPayMoney = applyMoney;
 	} else {
-		// 計算申報金額（用於扣繳和二代健保計算）
-		let reportMoney = includingTax ? applyMoney : Math.round(applyMoney / 0.8789);
-		
+		displayMoney = includingTax ? applyMoney : Math.round(applyMoney / 0.8789);
 		discountMoney = (includingTax && applyMoney >= 20010) || !includingTax
-			? reportMoney * discountRate
+			? displayMoney * discountRate
 			: 0;
 		secondGenerationHealthyMoney = (includingTax && applyMoney >= 20000) || !includingTax 
-		    ? reportMoney * secondGenerationHealthyMoneyRate 
+		    ? displayMoney * secondGenerationHealthyMoneyRate 
 		    : 0;
 
 		wholeDiscountMoney = !includingTax
 			? Math.round(discountMoney) + Math.round(secondGenerationHealthyMoney)
-			: reportMoney * wholeRate;
-		actualPayMoney = !includingTax ? applyMoney : reportMoney * (1 - wholeRate);
+			: displayMoney * wholeRate;
+		actualPayMoney = !includingTax ? applyMoney : displayMoney * (1 - wholeRate);
 	}
 	const updateElementText = (element, value) => element.textContent = `$${Math.round(value).toLocaleString()}`;
 	updateElementText($applyMoney, displayMoney);

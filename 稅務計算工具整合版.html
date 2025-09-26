@@ -41,12 +41,15 @@
         <div class="tool-container" id="labor-health-tool">
             <div class="container">
                 <div class="steps-list">
-                    <div id="step-1" class="step-item two-side-container">
-                        <div class="col">
-                            <h2 class="step-title">輸入您的月薪</h2>
-                        </div>
-                        <div class="col">
-                            <input type="number" step="1" min="0" id="salary-monthly" placeholder="輸入您的月薪" max="999999999" />
+                    <div id="step-1" class="step-item">
+                        <h2 class="step-title">輸入您的月薪</h2>
+                        <div class="two-side-container">
+                            <div class="col">
+                                <label for="salary-monthly" style="font-size:1.2rem">月薪:</label>
+                            </div>
+                            <div class="col">
+                                <input type="number" step="1" min="0" id="salary-monthly" placeholder="輸入您的月薪" max="999999999" />
+                            </div>
                         </div>
                     </div>
                     <div class="step-item" id="step-2">
@@ -116,7 +119,7 @@
                                         </tr>
                                         <tr class="weight-tr">
                                             <td>退休金</td>
-                                            <td>NT$</td>
+                                            <td>不提撥</td>
                                             <td>
                                                 NT$
                                                 <span id="pension"></span>
@@ -306,19 +309,22 @@
         <div class="tool-container" id="rent-tax-tool" style="display: none;">
             <div class="container">
                 <div class="steps-list">
-                    <div id="rent-step-1" class="step-item two-side-container">
-                        <div class="col">
-                            <h2 class="step-title">選擇房東類型</h2>
-                        </div>
-                        <div class="col">
-                            <div class="invoice-type-choices">
-                                <div class="custom-radio">
-                                    <input type="radio" id="personal-landlord" name="landlord" value="personal" checked="true" />
-                                    <label for="personal-landlord">個人</label>
-                                </div>
-                                <div class="custom-radio">
-                                    <input type="radio" id="company-landlord" name="landlord" value="company" />
-                                    <label for="company-landlord">公司</label>
+                    <div id="rent-step-1" class="step-item">
+                        <h2 class="step-title">選擇房東類型</h2>
+                        <div class="two-side-container">
+                            <div class="col">
+                                <label for="landlord-type" style="font-size:1.2rem">房東類型:</label>
+                            </div>
+                            <div class="col">
+                                <div class="invoice-type-choices">
+                                    <div class="custom-radio">
+                                        <input type="radio" id="personal-landlord" name="landlord" value="personal" checked="true" />
+                                        <label for="personal-landlord">個人</label>
+                                    </div>
+                                    <div class="custom-radio">
+                                        <input type="radio" id="company-landlord" name="landlord" value="company" />
+                                        <label for="company-landlord">公司</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -336,16 +342,16 @@
                             </div>
                             <div class="two-side-container">
                                 <div class="col">
-                                    <label for="tax-policy-label" class="input-desc">2. 含稅/未稅：</label>
+                                    <label for="tax-policy-label" class="input-desc">2. 上述金額為已含稅/未含稅：</label>
                                 </div>
                                 <div class="col invoice-type-choices">
                                     <div class="custom-radio">
                                         <input type="radio" id="including" name="tax-policy" value="including" checked="true" />
-                                        <label for="including">含稅</label>
+                                        <label for="including">已含稅</label>
                                     </div>
                                     <div class="custom-radio">
                                         <input type="radio" id="excluding" name="tax-policy" value="excluding" />
-                                        <label for="excluding">未稅</label>
+                                        <label for="excluding">未含稅</label>
                                     </div>
                                 </div>
                             </div>
