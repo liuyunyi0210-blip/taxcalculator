@@ -19,7 +19,28 @@ function changeTaxRate(elem){
 	}  else if (parseInt(taxRate) === 0) {
 		taxCheck.classList = "invoice-text tax-apply-check zero-rate";
 	}
-	calculatePrice();
+	
+	// 檢查哪個欄位有值，優先從有值的欄位計算
+	const salePrice = parseInt($salePrice.value);
+	const receivePrice = parseInt($receivePrice.value);
+	const taxAmount = parseInt($taxFee.value);
+	
+	if (!isNaN(salePrice) && salePrice > 0) {
+		// 如果有銷售額輸入，從銷售額計算
+		const event = { target: $salePrice };
+		calculateFromSalePrice(event);
+	} else if (!isNaN(receivePrice) && receivePrice > 0) {
+		// 如果有收款額輸入，從收款額計算
+		const event = { target: $receivePrice };
+		calculateFromReceivePrice(event);
+	} else if (!isNaN(taxAmount) && taxAmount > 0) {
+		// 如果有稅額輸入，從稅額計算
+		const event = { target: $taxFee };
+		calculateFromTaxAmount(event);
+	} else {
+		// 都沒有值，使用原來的計算方式
+		calculatePrice();
+	}
 }
 
 function checkPriceDigit(){
@@ -88,6 +109,86 @@ function convertToChinese(num) {
     return result;
 }
 
+function calculateFromSalePrice(event){
+	const salePrice = parseInt(event.target.value);
+	const $taxRate = document.getElementById('tax-rate');
+	let selectedTaxRate = $taxRate.value.trim();
+	if (selectedTaxRate === "") {
+		selectedTaxRate = 5;
+	} else {
+		selectedTaxRate = parseInt(selectedTaxRate);
+	}
+
+	if (isNaN(salePrice) || salePrice <= 0) {
+		$taxFee.value = "";
+		$receivePrice.value = "";
+		return;
+	}
+
+	const taxFee = Math.round(salePrice * (selectedTaxRate / 100));
+	const priceIncludingTax = selectedTaxRate === -1 ? salePrice : salePrice + taxFee;
+	
+	$taxFee.value = selectedTaxRate === -1 ? 0 : taxFee;
+	$receivePrice.value = priceIncludingTax;
+
+	const $singleItemprice = document.querySelector(`#${creatingInvoiceType}-section-invoice .invoice-single-item-price`);
+	const $singleItempriceBottom = document.querySelector(`#${creatingInvoiceType}-section-invoice .invoice-single-item-price-bottom`);
+	const formattedPrice = priceIncludingTax.toLocaleString();
+	if (creatingInvoiceType === 'three') {
+		const $saleSubtotalText = document.querySelector(`#${creatingInvoiceType}-section-invoice .sale-price-subtotal`);
+		const $taxText = document.querySelector(`#${creatingInvoiceType}-section-invoice .inovice-tax-total`);
+		$singleItemprice.textContent = salePrice.toLocaleString();
+		$saleSubtotalText.textContent = salePrice.toLocaleString();
+		$taxText.textContent = (selectedTaxRate === -1 ? 0 : taxFee).toLocaleString();
+	} else {
+		$singleItemprice.textContent = priceIncludingTax.toLocaleString();
+	}
+	$singleItempriceBottom.textContent = formattedPrice;
+
+	const chinesePrice = convertToChinese(priceIncludingTax);
+	setChinesePriceText(chinesePrice);
+}
+
+function calculateFromReceivePrice(event){
+	const priceIncludingTax = parseInt(event.target.value);
+	const $taxRate = document.getElementById('tax-rate');
+	let selectedTaxRate = $taxRate.value.trim();
+	if (selectedTaxRate === "") {
+		selectedTaxRate = 5;
+	} else {
+		selectedTaxRate = parseInt(selectedTaxRate);
+	}
+
+	if (isNaN(priceIncludingTax) || priceIncludingTax <= 0) {
+		$taxFee.value = "";
+		$salePrice.value = "";
+		return;
+	}
+
+	const purePrice = Math.round(priceIncludingTax / (1 + selectedTaxRate / 100));
+	const taxFee = Math.round(purePrice * (selectedTaxRate / 100));
+	
+	$taxFee.value = selectedTaxRate === -1 ? 0 : taxFee;
+	$salePrice.value = selectedTaxRate === -1 ? priceIncludingTax : purePrice;
+
+	const $singleItemprice = document.querySelector(`#${creatingInvoiceType}-section-invoice .invoice-single-item-price`);
+	const $singleItempriceBottom = document.querySelector(`#${creatingInvoiceType}-section-invoice .invoice-single-item-price-bottom`);
+	const formattedPrice = priceIncludingTax.toLocaleString();
+	if (creatingInvoiceType === 'three') {
+		const $saleSubtotalText = document.querySelector(`#${creatingInvoiceType}-section-invoice .sale-price-subtotal`);
+		const $taxText = document.querySelector(`#${creatingInvoiceType}-section-invoice .inovice-tax-total`);
+		$singleItemprice.textContent = (selectedTaxRate === -1 ? priceIncludingTax : purePrice).toLocaleString();
+		$saleSubtotalText.textContent = (selectedTaxRate === -1 ? priceIncludingTax : purePrice).toLocaleString();
+		$taxText.textContent = (selectedTaxRate === -1 ? 0 : taxFee).toLocaleString();
+	} else {
+		$singleItemprice.textContent = priceIncludingTax.toLocaleString();
+	}
+	$singleItempriceBottom.textContent = formattedPrice;
+
+	const chinesePrice = convertToChinese(priceIncludingTax);
+	setChinesePriceText(chinesePrice);
+}
+
 function setChinesePriceText(chinesePriceText){
 	const cutUnit = chinesePriceText.split("");
 	const priceUnitText = document.querySelectorAll(`#${creatingInvoiceType}-section-invoice .invoice-single-item-price-upper .price`);
@@ -106,26 +207,42 @@ function getInvoiceDateInfo() {
     const taiwanTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Taipei" });
     const date = new Date(taiwanTime);
     const month = date.getMonth() + 1;
+    const year = date.getFullYear() - 1911; // 轉換為民國年
     const chineseMonths = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"];
+    const chineseNumbers = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+    
+    // 轉換年份為中文
+    let chineseYear = "一";
+	const tens = Math.floor((year % 100) / 10);
+	const ones = year % 10;
+	chineseYear += chineseNumbers[tens];
+	chineseYear += chineseNumbers[ones];
+    
     let invoiceMonthText = chineseMonths[month - 1];
     if (month %2 === 0) {
-    	invoiceMonthText = chineseMonths[month - 2] + " 、 " + invoiceMonthText
+    	invoiceMonthText = chineseMonths[month - 2] + "　　" + invoiceMonthText
     } else {
-    	invoiceMonthText = invoiceMonthText + " 、 " + chineseMonths[month]
+    	invoiceMonthText = invoiceMonthText + "　　" + chineseMonths[month]
     }
-    return [invoiceMonthText, month, date.getDate()];
+    return [invoiceMonthText, chineseYear, year, month, date.getDate()];
 }
 
 function setInvoiceDate(texts){
 	const monthly = texts[0];
-	const month = texts[1];
-	const date = texts[2];
+	const chineseYear = texts[1];
+	const numericYear = texts[2];
+	const month = texts[3];
+	const date = texts[4];
 
 	['two', 'three'].forEach(sectionNum => {
 		const $monthlyText = document.querySelector(`#${sectionNum}-section-invoice .invoice-month`);
+		const $chineseYearText = document.querySelector(`#${sectionNum}-section-invoice .invoice-year-chinese`);
+		const $numericYearText = document.querySelector(`#${sectionNum}-section-invoice .invoice-year-numeric`);
 		const $monthText = document.querySelector(`#${sectionNum}-section-invoice .invoice-month-numeric`);
 		const $dateText = document.querySelector(`#${sectionNum}-section-invoice .invoice-date-numeric`);
 		$monthlyText.textContent = monthly;
+		$chineseYearText.textContent = chineseYear;
+		$numericYearText.textContent = numericYear;
 		$monthText.textContent = month;
 		$dateText.textContent = date;
 	})
@@ -222,4 +339,59 @@ let $companyName, $companyBusinessId, $receivePrice, $taxFee, $salePrice = null;
     		setCompanyInfoText(e);
     	})
     });
-})()
+})();
+
+function calculateFromTaxAmount(event){
+	const taxAmount = parseInt(event.target.value);
+	const $taxRate = document.getElementById('tax-rate');
+	let selectedTaxRate = $taxRate.value.trim();
+	if (selectedTaxRate === "") {
+		selectedTaxRate = 5;
+	} else {
+		selectedTaxRate = parseInt(selectedTaxRate);
+	}
+
+	if (isNaN(taxAmount) || taxAmount < 0) {
+		$salePrice.value = "";
+		$receivePrice.value = "";
+		return;
+	}
+
+	if (selectedTaxRate === -1) {
+		// 免稅情況
+		$salePrice.value = "";
+		$receivePrice.value = "";
+		return;
+	}
+
+	if (selectedTaxRate === 0) {
+		// 零稅率情況
+		$salePrice.value = "";
+		$receivePrice.value = "";
+		return;
+	}
+
+	// 從稅額計算未稅金額
+	const purePrice = Math.round(taxAmount / (selectedTaxRate / 100));
+	const priceIncludingTax = purePrice + taxAmount;
+	
+	$salePrice.value = purePrice;
+	$receivePrice.value = priceIncludingTax;
+
+	const $singleItemprice = document.querySelector(`#${creatingInvoiceType}-section-invoice .invoice-single-item-price`);
+	const $singleItempriceBottom = document.querySelector(`#${creatingInvoiceType}-section-invoice .invoice-single-item-price-bottom`);
+	const formattedPrice = priceIncludingTax.toLocaleString();
+	if (creatingInvoiceType === 'three') {
+		const $saleSubtotalText = document.querySelector(`#${creatingInvoiceType}-section-invoice .sale-price-subtotal`);
+		const $taxText = document.querySelector(`#${creatingInvoiceType}-section-invoice .inovice-tax-total`);
+		$singleItemprice.textContent = purePrice.toLocaleString();
+		$saleSubtotalText.textContent = purePrice.toLocaleString();
+		$taxText.textContent = taxAmount.toLocaleString();
+	} else {
+		$singleItemprice.textContent = priceIncludingTax.toLocaleString();
+	}
+	$singleItempriceBottom.textContent = formattedPrice;
+
+	const chinesePrice = convertToChinese(priceIncludingTax);
+	setChinesePriceText(chinesePrice);
+}

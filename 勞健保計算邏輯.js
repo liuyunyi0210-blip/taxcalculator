@@ -81,6 +81,13 @@ function calculateInsurance() {
     $('#employee_amount').html(addCommas(employeeAmount));
     $('#employer_amount').html(addCommas(rangeTo.employer_amount));
     $("#final_total").html(addCommas(employeeAmount + rangeTo.employer_amount));
+    
+    // 計算員工實領和雇主實支
+    const netEmployeePay = salary - employeeAmount; // 員工實領 = 投保薪資 - 員工負擔
+    const totalEmployerCost = salary + rangeTo.employer_amount; // 雇主實支 = 投保薪資 + 公司負擔
+    
+    $('#net-employee-pay').html(addCommas(netEmployeePay));
+    $('#total-employer-cost').html(addCommas(totalEmployerCost));
 }
 
 // 初始化事件監聽器

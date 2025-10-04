@@ -44,18 +44,20 @@
                                     <input type="number" step="1" min="0" id="monthly-renting-fee" placeholder="租金金額" oninput="updateRentingFee(event)" />
                                 </div>
                             </div>
-                            <div class="two-side-container">
+                            <div class="two-side-container" id="tax-policy-section">
                                 <div class="col">
-                                    <label for="tax-policy-label" class="input-desc">2. 含稅/未稅：</label>
+                                    <label for="tax-policy-label" class="input-desc">2. 上述金額為已含稅/未含稅：</label>
                                 </div>
                                 <div class="col invoice-type-choices">
                                     <div class="custom-radio">
                                         <input type="radio" id="including" name="tax-policy" value="including" checked="true" />
-                                        <label for="including">含稅</label>
+                                        <label for="including">已含稅</label>
+                                        <div style="font-size: 0.9rem; color: #666; margin-top: 2px;">房東繳</div>
                                     </div>
                                     <div class="custom-radio">
                                         <input type="radio" id="excluding" name="tax-policy" value="excluding" />
-                                        <label for="excluding">未稅</label>
+                                        <label for="excluding">未含稅</label>
+                                        <div style="font-size: 0.9rem; color: #666; margin-top: 2px;">租客繳</div>
                                     </div>
                                 </div>
                             </div>
@@ -64,18 +66,90 @@
                     <div class="step-item" id="rent-step-3">
                         <div class="col">
                             <h2 class="step-title">計算租金結果</h2>
-                            <div id="personal-landlord-ticket">
-                                <p class="fee-main-text">＊ 實際應申報金額（含稅）<span id="actual-apply-money">$0</span></p>
-                                <p class="fee-main-text">＊ 扣繳 10% <span id="discount-money">$0</span></p>
-                                <p class="fee-main-text">＊ 二代健保 2.11% <span id="second-generation-healthy">$0</span></p>
-                                <p class="fee-main-text">＊ 租扣二代總金額 <span id="whole-discount-money">$0</span></p>
-                                <p class="fee-main-text">＊ 實際支付租金（未稅）<span id="actual-pay-money">$0</span></p>
-                            </div>
-                            <div id="company-landlord-ticket" class="d-none">
-                                <h4>若需要，向房東索取的租金發票金額為</h4>
-                                <p class="fee-main-text">銷售額 <span id="rent-sale-price">$0</span></p>
-                                <p class="fee-main-text">稅額 <span id="rent-tax-price">$0</span></p>
-                                <p class="fee-main-text">總金額 <span id="rent-total-price">$0</span></p>
+                            <div class="rent-result-container">
+                                <!-- 左側：租客 -->
+                                <div class="rent-result-section tenant-section">
+                                    <h3 class="section-title">租客</h3>
+                                    
+                                    <!-- 個人房東時的租客顯示 -->
+                                    <div id="personal-tenant-display">
+                                        <div class="result-item">
+                                            <label class="result-label">實際支付租金 $</label>
+                                            <div class="result-value" id="tenant-actual-pay">$0</div>
+                                        </div>
+                                        <div class="result-summary-box">
+                                            <!-- 租客支付總結資訊 -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 公司房東時的租客顯示 -->
+                                    <div id="company-tenant-display" style="display: none;">
+                                        <div class="result-item">
+                                            <label class="result-label">實際支付租金 $</label>
+                                            <div class="result-value" id="company-tenant-actual-pay">$0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 右側：房東 -->
+                                <div class="rent-result-section landlord-section">
+                                    <h3 class="section-title">房東</h3>
+                                    
+                                    <!-- 個人房東顯示區域 -->
+                                    <div id="personal-landlord-ticket">
+                                        <div class="result-item">
+                                            <label class="result-label">實際拿到租金 $</label>
+                                            <div class="result-value" id="landlord-actual-receive">$0</div>
+                                        </div>
+                                        
+                                        <!-- 稅金明細 -->
+                                        <div class="tax-details">
+                                            <div class="tax-item">
+                                                <div class="tax-label">
+                                                    <input type="checkbox" checked disabled>
+                                                    <span>扣繳 10%</span>
+                                                </div>
+                                                <div class="tax-amount" id="withholding-tax">$0</div>
+                                            </div>
+                                            <div class="tax-item">
+                                                <div class="tax-label">
+                                                    <input type="checkbox" checked disabled>
+                                                    <span>二代健保 2.11%</span>
+                                                </div>
+                                                <div class="tax-amount" id="health-insurance-tax">$0</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- 合計 -->
+                                        <div class="tax-total">
+                                            <div class="total-label">合計</div>
+                                            <div class="total-amount" id="tax-total">$0</div>
+                                        </div>
+                                        
+                                        <div class="result-item">
+                                            <label class="result-label">扣繳憑單金額 $</label>
+                                            <div class="result-value" id="withholding-certificate">$0</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 公司房東顯示區域 -->
+                                    <div id="company-landlord-ticket" style="display: none;">
+                                        <div class="result-item">
+                                            <label class="result-label">銷售額(未稅) $</label>
+                                            <div class="result-value" id="rent-sale-price">$0</div>
+                                        </div>
+                                        
+                                        <div class="result-item">
+                                            <label class="result-label">營業稅(5%) $</label>
+                                            <div class="result-value" id="rent-tax-price">$0</div>
+                                        </div>
+                                        
+                                        <div class="result-item">
+                                            <label class="result-label">總額(含稅) $</label>
+                                            <div class="result-value" id="rent-total-price">$0</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

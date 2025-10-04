@@ -43,11 +43,11 @@
                         <h2 class="step-title">輸入發票開立資訊</h2>
                         <ol class="step-inputs" id="main-invoice-info-steps">
                             <li>
-                                <label for="receive-from-customer" class="input-desc">1. 和客戶的收款金額(含稅價)：</label>
-                                <input type="number" step="1" min="0" id="receive-from-customer" placeholder="KEY你要跟客戶收的錢" max="999999999" />
+                                <label for="sale-price" class="input-desc">1. 銷售額(未稅)：</label>
+                                <input type="number" step="1" min="0" id="sale-price" placeholder="輸入銷售金額" max="999999999" oninput="calculateFromSalePrice(event)" />
                             </li>
                             <li>
-                                <label for="tax-rate" class="input-desc">2. 稅率：應稅/零稅率/免稅 </label>
+                                <label for="tax-rate" class="input-desc">2. 稅率：</label>
                                 <select id="tax-rate" onchange="changeTaxRate(event)">
                                     <option value="5">應稅</option>
                                     <option value="0">零稅率</option>
@@ -56,11 +56,11 @@
                             </li>
                             <li>
                                 <label for="tax-money" class="input-desc">3. 稅額：</label>
-                                <input type="number" step="1" min="0" id="tax-money" readonly />
+                                <input type="number" step="1" min="0" id="tax-money" placeholder="輸入稅額" max="999999999" oninput="calculateFromTaxAmount(event)" />
                             </li>
                             <li>
-                                <label for="sale-price" class="input-desc">4. 銷售金額(未稅價)：</label>
-                                <input type="number" step="1" min="0" id="sale-price" readonly />
+                                <label for="receive-from-customer" class="input-desc">4. 收款額(含稅)：</label>
+                                <input type="number" step="1" min="0" id="receive-from-customer" placeholder="輸入收款金額" max="999999999" oninput="calculateFromReceivePrice(event)" />
                             </li>
                         </ol>
                     </div>
@@ -68,10 +68,12 @@
                 <div class="invoice-preview">
                     <div class="inside-container">
                         <div class="img-container" id="two-section-invoice">
-                            <img src="https://asdnas.com/2/images/two-section-invoice.jpg" class="d-block" />
-                            <div class="invoice-text default-item">填寫品項</div>
+                            <img src="空白發票-二聯.JPG" class="d-block" />
+                            <div class="invoice-text default-item">品項</div>
                             <div class="invoice-text tax-apply-check">V</div>
                             <div class="invoice-text invoice-month">一、二</div>
+                            <div class="invoice-text invoice-year-chinese">一一四</div>
+                            <div class="invoice-text invoice-year-numeric">114</div>
                             <div class="invoice-text invoice-month-numeric">1</div>
                             <div class="invoice-text invoice-date-numeric">1</div>
                             <div class="invoice-text invoice-single-item-price">0</div>
@@ -89,12 +91,14 @@
                             </div>
                         </div>
                         <div class="img-container d-none" id="three-section-invoice">
-                            <img src="https://asdnas.com/2/images/three-section-invoice.jpg" class="d-block" />
-                            <div class="invoice-text default-item">填寫品項</div>
+                            <img src="空白發票-三聯.png" class="d-block" />
+                            <div class="invoice-text default-item">品項</div>
                             <div class='invoice-text company-name'></div>
                             <div class="invoice-text company-business-id"></div>
                             <div class="invoice-text tax-apply-check">V</div>
                             <div class="invoice-text invoice-month">一、二</div>
+                            <div class="invoice-text invoice-year-chinese">一百一十三</div>
+                            <div class="invoice-text invoice-year-numeric">113</div>
                             <div class="invoice-text invoice-month-numeric">1</div>
                             <div class="invoice-text invoice-date-numeric">1</div>
                             <div class="invoice-text invoice-single-item-price">0</div>
