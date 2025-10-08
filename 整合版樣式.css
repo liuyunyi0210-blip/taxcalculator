@@ -931,6 +931,178 @@ select, select option {
         max-width: 600px;
     }
     
+    /* 手機版發票文字位置調整 */
+    /* 二聯式發票手機版文字位置 */
+    #two-section-invoice .tax-apply-check {
+        bottom: 31px;
+        left: 200px;
+    }
+    
+    #two-section-invoice .tax-apply-check.zero-rate {
+        left: 288px;
+    }
+    
+    #two-section-invoice .tax-apply-check.free-rate {
+        left: 371px;
+    }
+    
+    #two-section-invoice .invoice-month {
+        top: 30px;
+        left: 332px;
+        font-size: 13px;
+    }
+    
+    #two-section-invoice .invoice-year-chinese {
+        top: 30px;
+        left: 262px;
+        font-size: 13px;
+    }
+    
+    #two-section-invoice .invoice-year-numeric {
+        top: 46px;
+        left: 322px;
+        font-size: 13px;
+    }
+    
+    #two-section-invoice .invoice-month-numeric {
+        top: 46px;
+        left: 364px;
+        font-size: 13px;
+    }
+    
+    #two-section-invoice .invoice-date-numeric {
+        top: 46px;
+        left: 401px;
+        font-size: 13px;
+    }
+    
+    #two-section-invoice .invoice-single-item-price {
+        top: 127px;
+        right: 201px;
+        font-size: 14px;
+    }
+    
+    #two-section-invoice .invoice-single-item-price-bottom {
+        bottom: 68px;
+        right: 201px;
+        font-size: 14px;
+    }
+    
+    #two-section-invoice .invoice-single-item-price-upper {
+        bottom: 46px;
+        left: 94px;
+        font-size: 13px;
+    }
+    
+    #two-section-invoice .invoice-single-item-price-upper .price {
+        width: 32px;
+        margin-right: 2px;
+    }
+    
+    #two-section-invoice .default-item {
+        top: 130px;
+        left: 35px;
+        font-size: 14px;
+    }
+    
+    /* 三聯式發票手機版文字位置 */
+    #three-section-invoice .tax-apply-check {
+        bottom: 71px;
+        left: 177px;
+    }
+    
+    #three-section-invoice .tax-apply-check.zero-rate {
+        left: 226px;
+    }
+    
+    #three-section-invoice .tax-apply-check.free-rate {
+        left: 277px;
+    }
+    
+    #three-section-invoice .invoice-month {
+        top: 32px;
+        left: 315px;
+        font-size: 13px;
+    }
+    
+    #three-section-invoice .invoice-year-chinese {
+        top: 32px;
+        left: 251px;
+        font-size: 13px;
+    }
+    
+    #three-section-invoice .invoice-year-numeric {
+        top: 78px;
+        left: 354px;
+        font-size: 13px;
+    }
+    
+    #three-section-invoice .invoice-month-numeric {
+        top: 78px;
+        left: 396px;
+        font-size: 13px;
+    }
+    
+    #three-section-invoice .invoice-date-numeric {
+        top: 78px;
+        left: 432px;
+        font-size: 13px;
+    }
+    
+    #three-section-invoice .invoice-single-item-price {
+        top: 140px;
+        right: 194px;
+        font-size: 14px;
+    }
+    
+    #three-section-invoice .invoice-single-item-price-bottom {
+        bottom: 53px;
+        right: 194px;
+        font-size: 14px;
+    }
+    
+    #three-section-invoice .company-name {
+        top: 54px;
+        left: 99px;
+        font-size: 14px;
+    }
+    
+    #three-section-invoice .company-business-id {
+        font-size: 14px;
+        top: 78px;
+        left: 107px;
+        letter-spacing: 13px;
+    }
+    
+    #three-section-invoice .invoice-single-item-price-upper {
+        bottom: 32px;
+        left: 100px;
+        font-size: 13px;
+    }
+    
+    #three-section-invoice .invoice-single-item-price-upper .price {
+        width: 32px;
+        margin-right: 2px;
+    }
+    
+    #three-section-invoice .default-item {
+        top: 138px;
+        left: 49px;
+        font-size: 14px;
+    }
+    
+    #three-section-invoice .inovice-tax-total {
+        right: 194px;
+        bottom: 76px;
+        font-size: 13px;
+    }
+    
+    #three-section-invoice .sale-price-subtotal {
+        right: 194px;
+        bottom: 99px;
+        font-size: 13px;
+    }
+    
     .invoice-type-choices {
         flex-direction: column;
         gap: 10px;
@@ -976,6 +1148,178 @@ select, select option {
     
     .rent-result-section {
         padding: 15px;
+    }
+    
+    /* 超小螢幕發票文字位置調整 */
+    /* 二聯式發票超小螢幕文字位置 */
+    #two-section-invoice .tax-apply-check {
+        bottom: 25px;
+        left: 160px;
+    }
+    
+    #two-section-invoice .tax-apply-check.zero-rate {
+        left: 230px;
+    }
+    
+    #two-section-invoice .tax-apply-check.free-rate {
+        left: 297px;
+    }
+    
+    #two-section-invoice .invoice-month {
+        top: 24px;
+        left: 266px;
+        font-size: 11px;
+    }
+    
+    #two-section-invoice .invoice-year-chinese {
+        top: 24px;
+        left: 210px;
+        font-size: 11px;
+    }
+    
+    #two-section-invoice .invoice-year-numeric {
+        top: 37px;
+        left: 258px;
+        font-size: 11px;
+    }
+    
+    #two-section-invoice .invoice-month-numeric {
+        top: 37px;
+        left: 291px;
+        font-size: 11px;
+    }
+    
+    #two-section-invoice .invoice-date-numeric {
+        top: 37px;
+        left: 321px;
+        font-size: 11px;
+    }
+    
+    #two-section-invoice .invoice-single-item-price {
+        top: 102px;
+        right: 161px;
+        font-size: 12px;
+    }
+    
+    #two-section-invoice .invoice-single-item-price-bottom {
+        bottom: 54px;
+        right: 161px;
+        font-size: 12px;
+    }
+    
+    #two-section-invoice .invoice-single-item-price-upper {
+        bottom: 37px;
+        left: 75px;
+        font-size: 11px;
+    }
+    
+    #two-section-invoice .invoice-single-item-price-upper .price {
+        width: 26px;
+        margin-right: 1px;
+    }
+    
+    #two-section-invoice .default-item {
+        top: 104px;
+        left: 28px;
+        font-size: 12px;
+    }
+    
+    /* 三聯式發票超小螢幕文字位置 */
+    #three-section-invoice .tax-apply-check {
+        bottom: 57px;
+        left: 142px;
+    }
+    
+    #three-section-invoice .tax-apply-check.zero-rate {
+        left: 181px;
+    }
+    
+    #three-section-invoice .tax-apply-check.free-rate {
+        left: 222px;
+    }
+    
+    #three-section-invoice .invoice-month {
+        top: 26px;
+        left: 252px;
+        font-size: 11px;
+    }
+    
+    #three-section-invoice .invoice-year-chinese {
+        top: 26px;
+        left: 201px;
+        font-size: 11px;
+    }
+    
+    #three-section-invoice .invoice-year-numeric {
+        top: 62px;
+        left: 283px;
+        font-size: 11px;
+    }
+    
+    #three-section-invoice .invoice-month-numeric {
+        top: 62px;
+        left: 317px;
+        font-size: 11px;
+    }
+    
+    #three-section-invoice .invoice-date-numeric {
+        top: 62px;
+        left: 346px;
+        font-size: 11px;
+    }
+    
+    #three-section-invoice .invoice-single-item-price {
+        top: 112px;
+        right: 155px;
+        font-size: 12px;
+    }
+    
+    #three-section-invoice .invoice-single-item-price-bottom {
+        bottom: 42px;
+        right: 155px;
+        font-size: 12px;
+    }
+    
+    #three-section-invoice .company-name {
+        top: 43px;
+        left: 79px;
+        font-size: 12px;
+    }
+    
+    #three-section-invoice .company-business-id {
+        font-size: 12px;
+        top: 62px;
+        left: 86px;
+        letter-spacing: 10px;
+    }
+    
+    #three-section-invoice .invoice-single-item-price-upper {
+        bottom: 26px;
+        left: 80px;
+        font-size: 11px;
+    }
+    
+    #three-section-invoice .invoice-single-item-price-upper .price {
+        width: 26px;
+        margin-right: 1px;
+    }
+    
+    #three-section-invoice .default-item {
+        top: 110px;
+        left: 39px;
+        font-size: 12px;
+    }
+    
+    #three-section-invoice .inovice-tax-total {
+        right: 155px;
+        bottom: 61px;
+        font-size: 11px;
+    }
+    
+    #three-section-invoice .sale-price-subtotal {
+        right: 155px;
+        bottom: 79px;
+        font-size: 11px;
     }
 }
 

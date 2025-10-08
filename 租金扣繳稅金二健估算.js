@@ -110,61 +110,59 @@ function updateRentingFee(event = null){
 	let displayMoney = parseInt(eventTargetValue < 0 ? 0 : eventTargetValue);
 	document.getElementById('monthly-renting-fee').value = displayMoney;
 
-	let taxFee;
 	if (whoIsHouseOwner === 'company') {
 		// 公司房東：完全獨立的處理區塊
 		handleCompanyLandlord(applyMoney);
 		return;
 	}
 
-	let wholeRate = 0;
-	if (applyMoney < 17587) {
-		actualPayMoney = displayMoney;
-	} else {
-		if (!includingTax) {
-			wholeRate += (secondGenerationHealthyMoneyRate + discountRate);
-		} else {
-			if (applyMoney >= 20010) {
-				wholeRate += secondGenerationHealthyMoneyRate;
-				wholeRate += discountRate;
-			} else if (applyMoney >= 20000 && applyMoney < 20010) {
-				wholeRate += secondGenerationHealthyMoneyRate;
-			}
-		}
-	}
-
-	const needsCalculation = includingTax ? applyMoney >= 20000 : applyMoney >= 17587;
-	if (!needsCalculation) {
-	    actualPayMoney = applyMoney;
-	} else {
-		// displayMoney 是用於計算稅金的基礎金額（扣繳憑單金額）
-		if (includingTax) {
-			// 房東繳：displayMoney = 租金總額
-			displayMoney = applyMoney;
-		} else {
-			// 租客繳：displayMoney = 未稅金額
-			displayMoney = applyMoney;
-		}
-		discountMoney = (includingTax && applyMoney >= 20010) || !includingTax
-			? displayMoney * discountRate
-			: 0;
-		secondGenerationHealthyMoney = (includingTax && applyMoney >= 20000) || !includingTax 
-		    ? displayMoney * secondGenerationHealthyMoneyRate 
-		    : 0;
-
-		wholeDiscountMoney = !includingTax
-			? Math.round(discountMoney) + Math.round(secondGenerationHealthyMoney)
-			: displayMoney * wholeRate;
+	// 個人房東的計算邏輯
+	let withholdingCertificateAmount;
+	
+	if (includingTax) {
+		// 房東繳：扣繳憑單金額 = 實際租金金額
+		withholdingCertificateAmount = applyMoney;
 		
-		// 租客實際支付金額的計算
-		if (includingTax) {
-			// 房東繳：租客實際支付 = 租金總額（含稅）
-			actualPayMoney = applyMoney;
-		} else {
-			// 租客繳：租客實際支付 = 租金 + 代扣稅金
-			actualPayMoney = applyMoney + wholeDiscountMoney;
+		// 計算代扣稅金（10%）- 門檻：20,010元
+		if (withholdingCertificateAmount >= 20010) {
+			discountMoney = withholdingCertificateAmount * discountRate;
 		}
+		
+		// 計算二代健保（2.11%）- 門檻：20,000元
+		if (withholdingCertificateAmount >= 20000) {
+			secondGenerationHealthyMoney = withholdingCertificateAmount * secondGenerationHealthyMoneyRate;
+		}
+		
+		// 總代扣稅金
+		wholeDiscountMoney = Math.round(discountMoney) + Math.round(secondGenerationHealthyMoney);
+		
+		// 房東繳：租客實際支付 = 租金總額（含稅）
+		actualPayMoney = applyMoney;
+	} else {
+		// 租客繳：扣繳憑單金額 = 房東要收到的金額 ÷ (1 - 12.11%)
+		// 12.11% = 10% + 2.11%
+		const totalTaxRate = discountRate + secondGenerationHealthyMoneyRate; // 0.1211
+		// 使用無條件捨去避免浮點數誤差
+		withholdingCertificateAmount = Math.floor(applyMoney / 0.8789);
+		
+		
+		// 計算代扣稅金（10%）- 門檻：20,010元
+		if (withholdingCertificateAmount >= 20010) {
+			discountMoney = withholdingCertificateAmount * discountRate;
+		}
+		
+		// 計算二代健保（2.11%）- 門檻：20,000元
+		if (withholdingCertificateAmount >= 20000) {
+			secondGenerationHealthyMoney = withholdingCertificateAmount * secondGenerationHealthyMoneyRate;
+		}
+		
+		// 總代扣稅金
+		wholeDiscountMoney = Math.round(discountMoney) + Math.round(secondGenerationHealthyMoney);
+		
+		// 租客繳：租客實際支付 = 扣繳憑單金額
+		actualPayMoney = withholdingCertificateAmount;
 	}
+	
 	const updateElementText = (element, value) => {
 		if (element) {
 			element.textContent = `$${Math.round(value).toLocaleString()}`;
@@ -187,15 +185,16 @@ function updateRentingFee(event = null){
 		// 房東繳：房東實際拿到 = 租客實際支付 - 代扣稅金
 		landlordReceiveAmount = actualPayMoney - wholeDiscountMoney;
 	} else {
-		// 租客繳：房東實際拿到 = 租客實際支付（因為稅金由租客負擔）
-		landlordReceiveAmount = actualPayMoney;
+		// 租客繳：房東實際拿到 = 原始租金金額（因為稅金由租客負擔）
+		landlordReceiveAmount = applyMoney;
 	}
+	
 	
 	updateElementText($landlordActualReceive, landlordReceiveAmount);
 	updateElementText($withholdingTax, discountMoney);
 	updateElementText($healthInsuranceTax, secondGenerationHealthyMoney);
 	updateElementText($taxTotal, wholeDiscountMoney);
-	updateElementText($withholdingCertificate, displayMoney);
+	updateElementText($withholdingCertificate, withholdingCertificateAmount);
 }
 
 (function(){
