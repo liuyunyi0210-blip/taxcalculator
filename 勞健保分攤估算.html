@@ -17,11 +17,11 @@
                     <div class="input-section">
                         <div class="input-fields">
                             <div class="salary-input-container">
-                                <label for="salary-monthly" style="font-size:1.5rem">月薪:</label>
+                                <label for="salary-monthly" style="font-size:1.2rem">▌月薪：</label>
                                 <input type="number" step="1" min="0" id="salary-monthly" placeholder="輸入月薪金額" max="999999999" />
                             </div>
                             <div class="dependent-input-container">
-                                <label for="take-care-people" style="font-size:1.5rem">扶養眷屬:</label>
+                                <label for="take-care-people" style="font-size:1.2rem">▌扶養眷屬：</label>
                                 <select class="take-care-people responsive-select" id="take-care-people">
                                     <option value="1">本人</option>
                                     <option value="2">本人及1眷屬</option>
@@ -34,14 +34,14 @@
                     
                     <!-- 計算結果區域 -->
                     <div class="result-section">
-                        <h2 class="section-title">計算結果</h2>
+                        <h2 class="section-title">▍計算結果</h2>
                         <div class="table-container">
-                            <div id="current-salary-with-insurance">投保薪資為: NT$<span id="salary"></span> (投保級距: <span id="range_from">0</span> ~ <span id="range_to">0</span>)</div>
+                            <div id="current-salary-with-insurance">投保薪資： NT$<span id="salary"></span>  （投保級距: <span id="range_from">0</span> ~ <span id="range_to">0</span>）</div>
                             <div class="table-wrapper">
                                 <table class="table w-100">
                                     <thead>
                                         <tr>
-                                            <th>社會保險</th>
+                                            <th>保險種類</th>
                                             <th>員工負擔</th>
                                             <th>公司負擔</th>
                                             <th>合計</th>
@@ -80,7 +80,7 @@
                                         </tr>
                                         <tr class="weight-tr">
                                             <td>退休金</td>
-                                            <td>不提撥</td>
+                                            <td>可自行提撥</td>
                                             <td>
                                                 NT$
                                                 <span id="pension"></span>

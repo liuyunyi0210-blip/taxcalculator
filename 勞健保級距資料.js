@@ -1,3 +1,57 @@
+/**
+ * 勞健保級距資料
+ * 
+ * 本檔案包含台灣勞工保險、全民健康保險及勞工退休金的投保級距資料。
+ * 資料結構為陣列，每個元素代表一個投保級距，包含該級距的投保金額及對應的保險費用。
+ * 
+ * 使用說明：
+ * 1. 此資料檔需配合「勞健保計算邏輯.js」使用
+ * 2. 根據員工月薪，透過 getRange() 函數找到對應的投保級距
+ * 3. 使用級距資料計算員工與雇主各自需負擔的保險費用
+ * 
+ * 資料來源：
+ * - 勞工保險：依據勞工保險條例及相關法規
+ * - 全民健康保險：依據全民健康保險法
+ * - 勞工退休金：依據勞工退休金條例（雇主提撥 6%）
+ * 
+ * 注意事項：
+ * - 本資料為特定年度之級距表，若法規或費率調整，需更新此資料檔
+ * - 投保金額單位：新台幣（元）
+ * - 保險費用單位：新台幣（元）
+ * - 勞保費用包含：普通事故保險、職業災害保險
+ * - 健保費用會依眷屬人數調整（本資料為基本費率，需乘以眷屬人數）
+ * - 退休金為雇主提撥金額（投保薪資 × 6%）
+ * 
+ * 資料結構說明：
+ * @typedef {Object} InsuranceRange
+ * @property {number} amount - 投保金額（月薪）
+ * @property {number} labor_insurance_employee - 勞保費用（員工負擔）
+ * @property {number} labor_insurance_employer - 勞保費用（雇主負擔）
+ * @property {number} health_insurance_employee - 健保費用（員工負擔，單人）
+ * @property {number} health_insurance_employer - 健保費用（雇主負擔）
+ * @property {number} pension - 勞工退休金（雇主提撥 6%）
+ * @property {number} employee_amount - 員工總負擔金額（勞保 + 健保）
+ * @property {number} employer_amount - 雇主總負擔金額（勞保 + 健保 + 退休金）
+ * 
+ * 範例說明：
+ * {
+ *   "amount": 1500,                    // 投保金額：1,500 元
+ *   "labor_insurance_employee": 277,   // 勞保員工負擔：277 元
+ *   "labor_insurance_employer": 972,   // 勞保雇主負擔：972 元
+ *   "health_insurance_employee": 443,  // 健保員工負擔（單人）：443 元
+ *   "health_insurance_employer": 1384, // 健保雇主負擔：1,384 元
+ *   "pension": 90,                     // 退休金（雇主提撥 6%）：90 元
+ *   "employee_amount": 720,            // 員工總負擔：720 元（277 + 443）
+ *   "employer_amount": 2446            // 雇主總負擔：2,446 元（972 + 1384 + 90）
+ * }
+ * 
+ * 級距說明：
+ * - 級距範圍從最低 1,500 元到最高 313,000 元
+ * - 每個級距代表一個投保薪資區間
+ * - 當員工月薪落在某個級距範圍內時，使用該級距的保險費用計算
+ * - 健保員工負擔會依眷屬人數調整（基本費率 × 眷屬人數）
+ */
+
 const ranges = [{
     "amount": 1500,
     "labor_insurance_employee": 277,

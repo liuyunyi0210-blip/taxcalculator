@@ -220,9 +220,9 @@ function getInvoiceDateInfo() {
     
     let invoiceMonthText = chineseMonths[month - 1];
     if (month %2 === 0) {
-    	invoiceMonthText = chineseMonths[month - 2] + "　　" + invoiceMonthText
+    	invoiceMonthText = chineseMonths[month - 2] + "　" + invoiceMonthText
     } else {
-    	invoiceMonthText = invoiceMonthText + "　　" + chineseMonths[month]
+    	invoiceMonthText = invoiceMonthText + "　" + chineseMonths[month]
     }
     return [invoiceMonthText, chineseYear, year, month, date.getDate()];
 }
