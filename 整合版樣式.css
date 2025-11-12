@@ -221,7 +221,7 @@ body {
     font-size: 1rem;            /* 字體大小 */
     padding: 0.75rem 1.25rem;   /* 內邊距 */
     border: 2px solid #d4c4a8;  /* 邊框（2px 實線） */
-    border-radius: 8px;         /* 圓角 */
+    border-radius: 10px;         /* 圓角（優化：從 8px 增加到 10px） */
     cursor: pointer;            /* 滑鼠指標（手型） */
     text-align: center !important;  /* 文字置中（強制） */
     text-align-last: center !important;  /* 最後一行文字置中（強制） */
@@ -234,16 +234,34 @@ body {
     -webkit-appearance: none;   /* WebKit 瀏覽器移除預設外觀 */
     -moz-appearance: none;     /* Firefox 移除預設外觀 */
     background-image: none;     /* 移除背景圖片 */
+    box-shadow: 0 2px 8px rgba(212, 196, 168, 0.15), 0 1px 3px rgba(212, 196, 168, 0.1);  /* 優化陰影：多層次陰影效果 */
+}
+
+/* 輸入欄位和下拉選單 hover 狀態的樣式 */
+.step-inputs input:hover,
+.step-inputs select:hover,
+.step-item input:hover,
+.step-item select:hover,
+.input-section input:hover,
+.input-section select:hover {
+    background: linear-gradient(135deg, #f9f7f4 0%, #f0e8dd 100%);  /* hover 時背景色變亮 */
+    border-color: #c4b59a;      /* hover 時邊框顏色加深 */
+    box-shadow: 0 4px 12px rgba(212, 196, 168, 0.25), 0 2px 6px rgba(212, 196, 168, 0.15);  /* hover 時陰影加深 */
+    transform: translateY(-1px);  /* 輕微上移（視覺反饋） */
 }
 
 /* 輸入欄位獲得焦點時的樣式 */
 .step-inputs input:focus,
+.step-inputs select:focus,
 .step-item input:focus,
-.input-section input:focus {
+.step-item select:focus,
+.input-section input:focus,
+.input-section select:focus {
     outline: none;              /* 移除預設外框 */
-    border-color: #d4c4a8;      /* 邊框顏色（保持不變） */
-    box-shadow: 0 0 0 3px rgba(212, 196, 168, 0.3);  /* 外發光效果 */
+    border-color: #c4b59a;      /* 焦點時邊框顏色加深 */
+    box-shadow: 0 0 0 3px rgba(212, 196, 168, 0.3), 0 4px 12px rgba(212, 196, 168, 0.25);  /* 外發光效果 + 陰影 */
     transform: translateY(-1px);  /* 輕微上移（視覺反饋） */
+    background: linear-gradient(135deg, #f9f7f4 0%, #f0e8dd 100%);  /* 焦點時背景色變亮 */
 }
 
 /* 勞健保工具的下拉選單 */
@@ -252,7 +270,7 @@ body {
     font-size: 1rem;
     padding: 0.75rem 1.25rem;
     border: 2px solid #d4c4a8;
-    border-radius: 8px;
+    border-radius: 10px;         /* 優化：從 8px 增加到 10px */
     cursor: pointer;
     text-align: center !important;
     text-align-last: center !important;
@@ -265,6 +283,24 @@ body {
     -webkit-appearance: none;
     -moz-appearance: none;
     background-image: none;
+    box-shadow: 0 2px 8px rgba(212, 196, 168, 0.15), 0 1px 3px rgba(212, 196, 168, 0.1);  /* 優化陰影：多層次陰影效果 */
+}
+
+/* 勞健保工具下拉選單 hover 狀態 */
+.take-care-people:hover {
+    background: linear-gradient(135deg, #f9f7f4 0%, #f0e8dd 100%);  /* hover 時背景色變亮 */
+    border-color: #c4b59a;      /* hover 時邊框顏色加深 */
+    box-shadow: 0 4px 12px rgba(212, 196, 168, 0.25), 0 2px 6px rgba(212, 196, 168, 0.15);  /* hover 時陰影加深 */
+    transform: translateY(-1px);  /* 輕微上移（視覺反饋） */
+}
+
+/* 勞健保工具下拉選單焦點狀態 */
+.take-care-people:focus {
+    outline: none;              /* 移除預設外框 */
+    border-color: #c4b59a;      /* 焦點時邊框顏色加深 */
+    box-shadow: 0 0 0 3px rgba(212, 196, 168, 0.3), 0 4px 12px rgba(212, 196, 168, 0.25);  /* 外發光效果 + 陰影 */
+    transform: translateY(-1px);  /* 輕微上移（視覺反饋） */
+    background: linear-gradient(135deg, #f9f7f4 0%, #f0e8dd 100%);  /* 焦點時背景色變亮 */
 }
 
 input::placeholder {
@@ -318,6 +354,22 @@ select, select option {
     text-align-last: center !important;
 }
 
+/* 下拉選單選項（option）樣式優化 */
+select option {
+    background-color: #f5f1eb;   /* 選項背景色 */
+    color: #6b5b47;              /* 選項文字顏色 */
+    padding: 0.75rem 1.25rem;    /* 選項內邊距 */
+    font-size: 1rem;             /* 字體大小 */
+}
+
+/* 下拉選單選項 hover 狀態（部分瀏覽器支援） */
+select option:hover,
+select option:checked {
+    background-color: #d4c4a8 !important;  /* hover/選中時背景色 */
+    color: #5a4a3a !important;   /* hover/選中時文字顏色加深 */
+    font-weight: 600;            /* 選中時字體加粗 */
+}
+
 /* 針對特定ID的select元素 */
 #take-care-people, #tax-rate {
     text-align: center !important;
@@ -356,6 +408,7 @@ select, select option {
     margin-left: -15px;          /* 負邊距補償 border-spacing */
     border-radius: 0 0 5px 5px;  /* 下方圓角 */
     overflow: hidden;            /* 隱藏溢出內容 */
+    border: none;                /* 移除表格邊框 */
 }
 
 /* 表格包裝器（用於調整表格寬度） */
@@ -398,6 +451,7 @@ select, select option {
     padding: 15px;               /* 內邊距 */
     text-align: center;          /* 文字置中 */
     font-weight: 600;           /* 字體粗細 */
+    border: none;               /* 移除表頭邊框 */
 }
 
 /* 表格第一欄（保險種類）的樣式
@@ -530,6 +584,63 @@ select, select option {
     background: linear-gradient(135deg, #f9f7f4 0%, #f5f1eb 100%);
 }
 
+/* 稅率和稅額合併列樣式 */
+.tax-rate-amount-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.tax-rate-group {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: 150px;
+}
+
+.tax-amount-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;  /* 允許 flex 項目縮小，避免超出容器 */
+}
+
+.tax-rate-group .input-desc,
+.tax-amount-group .input-desc {
+    width: auto;
+    float: none;
+    margin-bottom: 5px;
+}
+
+/* 稅率選單寬度設定（使用更具體的選擇器確保優先級） */
+.step-inputs .tax-rate-group select,
+.step-inputs .tax-rate-group #tax-rate,
+.tax-rate-amount-row .tax-rate-group select,
+.tax-rate-amount-row .tax-rate-group #tax-rate {
+    width: 100px !important;
+    min-width: 100px !important;
+    max-width: 100px !important;
+}
+
+/* 稅額輸入框寬度設定（相對於父容器寬度，使用 flex 自動調整） */
+.step-inputs .tax-amount-group input,
+.step-inputs .tax-amount-group #tax-money,
+.tax-rate-amount-row .tax-amount-group input,
+.tax-rate-amount-row .tax-amount-group #tax-money {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+}
+
+/* 銷售額和收款額輸入框寬度設定 */
+#sale-price,
+#receive-from-customer {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+}
+
 #main-invoice-info-steps .input-desc {
     width: 400px;
 }
@@ -552,6 +663,8 @@ select, select option {
     display: inline-block;         /* 改為 inline-block，確保容器大小跟圖片一致 */
     margin: 0 auto;
     line-height: 0;                /* 移除行高，確保容器大小完全由圖片決定 */
+    width: fit-content;            /* 確保容器寬度完全由內容（圖片）決定 */
+    height: fit-content;          /* 確保容器高度完全由內容（圖片）決定 */
 }
 
 .invoice-preview .inside-container::-webkit-scrollbar {
@@ -568,7 +681,7 @@ select, select option {
     max-width: 100%;           /* 響應式：最大寬度不超過容器 */
     width: 850px;              /* 預設寬度 */
     height: auto;              /* 保持寬高比 */
-    position: relative;         /* 確保圖片是定位基準 */
+    vertical-align: top;        /* 確保圖片對齊，避免底部間隙 */
 }
 
 /* 發票文字設定 */
@@ -577,6 +690,9 @@ select, select option {
     z-index: 10;
     color: #6b5b47;
     font-weight: bold;
+    transform: translateZ(0);    /* 觸發硬體加速，確保定位穩定 */
+    will-change: transform;      /* 提示瀏覽器優化 */
+    backface-visibility: hidden; /* 避免渲染問題 */
 }
 
 /* 二聯式發票文字位置（一律使用手機版設定） */
@@ -649,12 +765,12 @@ select, select option {
     white-space: nowrap;        /* 防止換行，確保所有金額在一行內呈現 */
     display: flex;              /* 使用 flex 佈局，確保子元素在一行 */
     flex-wrap: nowrap;          /* 不允許換行 */
-    gap: 4.5%;
+    gap: 6%;
 }
 
 #two-section-invoice .invoice-single-item-price-upper .price {
     width: 5.3%;
-    min-width: 20px;             /* 最小寬度，確保文字可見 */
+    min-width: 0;               /* 移除固定最小寬度，允許縮放 */
 }
 
 /* 三聯式發票文字位置（一律使用手機版設定） */
@@ -734,12 +850,12 @@ select, select option {
     white-space: nowrap;        /* 防止換行，確保所有金額在一行內呈現 */
     display: flex;              /* 使用 flex 佈局，確保子元素在一行 */
     flex-wrap: nowrap;          /* 不允許換行 */
-    gap: 4.5%;
+    gap: 6%;
 }
 
 #three-section-invoice .invoice-single-item-price-upper .price {
     width: 5.4%;
-    min-width: 20px;             /* 最小寬度，確保文字可見 */
+    min-width: 0.5em;           /* 改用相對單位，隨字體大小縮放 */
 }
 
 

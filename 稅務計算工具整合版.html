@@ -188,17 +188,18 @@
                                 <label for="sale-price" class="input-desc">1. 銷售額(未稅)：</label>
                                 <input type="number" step="1" min="0" id="sale-price" placeholder="輸入銷售金額" max="999999999" oninput="calculateFromSalePrice(event)" />
                             </li>
-                            <li>
-                                <label for="tax-rate" class="input-desc">2. 稅率：</label>
-                                <select id="tax-rate" onchange="changeTaxRate(event)">
-                                    <option value="5">應稅</option>
-                                    <option value="0">零稅率</option>
-                                    <option value="-1">免稅</option>                        
-                                </select>
-                            </li>
-                            <li>
-                                <label for="tax-money" class="input-desc">3. 稅額：</label>
-                                <input type="number" step="1" min="0" id="tax-money" placeholder="輸入稅額" max="999999999" oninput="calculateFromTaxAmount(event)" />
+                            <li class="tax-rate-amount-row">
+                                <div class="tax-rate-group">
+                                    <label for="tax-rate" class="input-desc">2. 稅率/稅額：</label>
+                                    <select id="tax-rate" onchange="changeTaxRate(event)">
+                                        <option value="5">應稅</option>
+                                        <option value="0">零稅率</option>
+                                        <option value="-1">免稅</option>                        
+                                    </select>
+                                </div>
+                                <div class="tax-amount-group">
+                                    <input type="number" step="1" min="0" id="tax-money" placeholder="輸入稅額" max="999999999" oninput="calculateFromTaxAmount(event)" />
+                                </div>
                             </li>
                             <li>
                                 <label for="receive-from-customer" class="input-desc">4. 收款額(含稅)：</label>
