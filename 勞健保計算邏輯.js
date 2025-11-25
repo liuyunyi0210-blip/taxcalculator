@@ -90,6 +90,111 @@ function calculateInsurance() {
     $('#total-employer-cost').html(addCommas(totalEmployerCost));
 }
 
+// ============================================
+// 自訂下拉選單功能（用於扶養眷屬選單）
+// ============================================
+
+// 如果整合版功能.js 沒有載入，則定義本地函數
+if (typeof window.initCustomSelect === 'undefined') {
+	// 更新自訂下拉選單顯示文字
+	function updateCustomSelectDisplay(selectId, value) {
+		const button = document.getElementById(`${selectId}-button`);
+		if (!button) return;
+		
+		const textSpan = button.querySelector('.custom-select-text');
+		const options = document.querySelectorAll(`#${selectId}-options .custom-select-option`);
+		
+		// 移除所有選中狀態
+		options.forEach(option => option.classList.remove('selected'));
+		
+		// 找到對應的選項並更新顯示
+		options.forEach(option => {
+			if (option.getAttribute('data-value') === value) {
+				if (textSpan) textSpan.textContent = option.textContent;
+				option.classList.add('selected');
+			}
+		});
+	}
+
+	// 初始化自訂下拉選單
+	function initCustomSelect(selectId) {
+		const select = document.getElementById(selectId);
+		const button = document.getElementById(`${selectId}-button`);
+		const options = document.getElementById(`${selectId}-options`);
+		
+		if (!select || !button || !options) return;
+		
+		const optionElements = options.querySelectorAll('.custom-select-option');
+		
+		// 初始化顯示當前選中的值
+		const currentValue = select.value;
+		updateCustomSelectDisplay(selectId, currentValue);
+		
+		// 按鈕點擊事件：展開/收起選單
+		button.addEventListener('click', function(e) {
+			e.stopPropagation();
+			const isOpen = options.classList.contains('show');
+			
+			// 關閉所有其他下拉選單
+			document.querySelectorAll('.custom-select-options.show').forEach(opt => {
+				if (opt !== options) {
+					opt.classList.remove('show');
+					const wrapper = opt.closest('.custom-select-wrapper');
+					if (wrapper) {
+						const otherButton = wrapper.querySelector('.custom-select-button');
+						if (otherButton) otherButton.classList.remove('open');
+					}
+				}
+			});
+			
+			// 切換當前選單
+			if (isOpen) {
+				options.classList.remove('show');
+				button.classList.remove('open');
+			} else {
+				options.classList.add('show');
+				button.classList.add('open');
+			}
+		});
+		
+		// 選項點擊事件
+		optionElements.forEach(option => {
+			option.addEventListener('click', function() {
+				const value = this.getAttribute('data-value');
+				select.value = value;
+				
+				// 觸發 change 事件（讓原有的監聽器能正常工作）
+				const event = new Event('change', { bubbles: true });
+				select.dispatchEvent(event);
+				
+				// 更新顯示
+				updateCustomSelectDisplay(selectId, value);
+				
+				// 關閉選單
+				options.classList.remove('show');
+				button.classList.remove('open');
+			});
+		});
+		
+		// 點擊外部關閉選單
+		document.addEventListener('click', function(e) {
+			if (!button.contains(e.target) && !options.contains(e.target)) {
+				options.classList.remove('show');
+				button.classList.remove('open');
+			}
+		});
+		
+		// 監聽原生 select 的 change 事件（以防有其他方式改變值）
+		select.addEventListener('change', function() {
+			updateCustomSelectDisplay(selectId, this.value);
+		});
+	}
+	
+	// 導出到 window（供其他腳本使用）
+	window.initCustomSelect = initCustomSelect;
+	window.updateCustomSelectDisplay = updateCustomSelectDisplay;
+}
+
 // 初始化事件監聽器
 (function() {
     $monthlySalary = document.getElementById('salary-monthly');
@@ -98,8 +203,22 @@ function calculateInsurance() {
     $monthlySalary.addEventListener("input", () => { 
         calculateInsurance(); 
     });
-    
-    $takeCarePeopleCnts.addEventListener("change", () => { 
-        calculateInsurance(); 
+
+    $takeCarePeopleCnts.addEventListener("change", () => {
+        calculateInsurance();
     });
+    
+    // 初始化扶養眷屬自訂下拉選單（使用 window 上的函數）
+    // 使用 setTimeout 確保所有腳本都已載入
+    setTimeout(function() {
+        const initFn = window.initCustomSelect;
+        if (initFn) {
+            initFn('take-care-people');
+        } else {
+            // 如果 window 上還沒有函數，使用本地定義的函數
+            if (typeof initCustomSelect !== 'undefined') {
+                initCustomSelect('take-care-people');
+            }
+        }
+    }, 100);
 })();

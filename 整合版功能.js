@@ -83,6 +83,26 @@ function switchTool(toolName) {
         sidebar.classList.add('collapsed');
         mainContent.classList.remove('expanded');
     }
+    
+    // 當切換到勞健保工具時，初始化下拉選單
+    if (toolName === 'labor-health' && window.initCustomSelect) {
+        setTimeout(function() {
+            const select = document.getElementById('take-care-people');
+            if (select && select.dataset.customSelectInitialized !== 'true') {
+                window.initCustomSelect('take-care-people');
+            }
+        }, 50);
+    }
+    
+    // 當切換到發票工具時，初始化下拉選單
+    if (toolName === 'invoice' && window.initCustomSelect) {
+        setTimeout(function() {
+            const select = document.getElementById('tax-rate');
+            if (select && select.dataset.customSelectInitialized !== 'true') {
+                window.initCustomSelect('tax-rate');
+            }
+        }, 50);
+    }
 }
 
 // 初始化所有工具
@@ -97,6 +117,15 @@ function initializeLaborHealthTool() {
     // 這裡會使用原本的勞健保計算邏輯
     // 由於原本的 JavaScript 檔案已經包含了所有功能
     // 我們只需要確保事件監聽器正確綁定
+    
+    // 初始化扶養眷屬自訂下拉選單
+    // 使用 setTimeout 確保所有腳本都已載入且元素已存在
+    setTimeout(function() {
+        if (window.initCustomSelect) {
+            window.initCustomSelect('take-care-people');
+        }
+    }, 50);
+    
     console.log('勞健保分攤估算工具已初始化');
 }
 
@@ -222,6 +251,115 @@ window.addEventListener('resize', handleResponsive);
 // 頁面載入時處理響應式
 window.addEventListener('load', handleResponsive);
 
+// ============================================
+// 自訂下拉選單功能（通用函數）
+// ============================================
+
+// 更新自訂下拉選單顯示文字
+function updateCustomSelectDisplay(selectId, value) {
+    const button = document.getElementById(`${selectId}-button`);
+    if (!button) return;
+    
+    const textSpan = button.querySelector('.custom-select-text');
+    const options = document.querySelectorAll(`#${selectId}-options .custom-select-option`);
+    
+    // 移除所有選中狀態
+    options.forEach(option => option.classList.remove('selected'));
+    
+    // 找到對應的選項並更新顯示
+    options.forEach(option => {
+        if (option.getAttribute('data-value') === value) {
+            if (textSpan) textSpan.textContent = option.textContent;
+            option.classList.add('selected');
+        }
+    });
+}
+
+// 初始化自訂下拉選單（通用版本）
+function initCustomSelect(selectId) {
+    const select = document.getElementById(selectId);
+    const button = document.getElementById(`${selectId}-button`);
+    const options = document.getElementById(`${selectId}-options`);
+    
+    if (!select || !button || !options) {
+        console.warn(`自訂下拉選單初始化失敗：找不到元素 (${selectId})`);
+        return;
+    }
+    
+    // 如果已經初始化過，先移除舊的事件監聽器（避免重複綁定）
+    if (select.dataset.customSelectInitialized === 'true') {
+        return;
+    }
+    select.dataset.customSelectInitialized = 'true';
+    
+    const optionElements = options.querySelectorAll('.custom-select-option');
+    
+    // 初始化顯示當前選中的值
+    const currentValue = select.value;
+    updateCustomSelectDisplay(selectId, currentValue);
+    
+    // 按鈕點擊事件：展開/收起選單
+    button.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isOpen = options.classList.contains('show');
+        
+        // 關閉所有其他下拉選單
+        document.querySelectorAll('.custom-select-options.show').forEach(opt => {
+            if (opt !== options) {
+                opt.classList.remove('show');
+                const wrapper = opt.closest('.custom-select-wrapper');
+                if (wrapper) {
+                    const otherButton = wrapper.querySelector('.custom-select-button');
+                    if (otherButton) otherButton.classList.remove('open');
+                }
+            }
+        });
+        
+        // 切換當前選單
+        if (isOpen) {
+            options.classList.remove('show');
+            button.classList.remove('open');
+        } else {
+            options.classList.add('show');
+            button.classList.add('open');
+        }
+    });
+    
+    // 選項點擊事件
+    optionElements.forEach(option => {
+        option.addEventListener('click', function() {
+            const value = this.getAttribute('data-value');
+            select.value = value;
+            
+            // 觸發 change 事件（讓原有的監聽器能正常工作）
+            const event = new Event('change', { bubbles: true });
+            select.dispatchEvent(event);
+            
+            // 更新顯示
+            updateCustomSelectDisplay(selectId, value);
+            
+            // 關閉選單
+            options.classList.remove('show');
+            button.classList.remove('open');
+        });
+    });
+    
+    // 點擊外部關閉選單
+    document.addEventListener('click', function(e) {
+        if (!button.contains(e.target) && !options.contains(e.target)) {
+            options.classList.remove('show');
+            button.classList.remove('open');
+        }
+    });
+    
+    // 監聽原生 select 的 change 事件（以防有其他方式改變值）
+    select.addEventListener('change', function() {
+        updateCustomSelectDisplay(selectId, this.value);
+    });
+}
+
 // 導出函數供其他腳本使用
 window.switchTool = switchTool;
 window.animateToolSwitch = animateToolSwitch;
+window.initCustomSelect = initCustomSelect;
+window.updateCustomSelectDisplay = updateCustomSelectDisplay;

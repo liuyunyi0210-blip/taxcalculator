@@ -11,13 +11,19 @@ function setCompanyInfoText(event){
 
 function changeTaxRate(elem){
 	const taxCheck = document.querySelector(`#${creatingInvoiceType}-section-invoice .tax-apply-check`)
-	taxRate = elem.target.value;
+	taxRate = elem.target ? elem.target.value : elem.value;
 	if (taxRate === "" || parseInt(taxRate) === 5) {
 		taxCheck.classList = "invoice-text tax-apply-check";
 	} else if (parseInt(taxRate) === -1) {
 		taxCheck.classList = "invoice-text tax-apply-check free-rate";
 	}  else if (parseInt(taxRate) === 0) {
 		taxCheck.classList = "invoice-text tax-apply-check zero-rate";
+	}
+	
+	// 更新自訂下拉選單顯示
+	// 更新自訂下拉選單顯示（如果已初始化）
+	if (window.updateCustomSelectDisplay) {
+		window.updateCustomSelectDisplay('tax-rate', taxRate);
 	}
 	
 	// 檢查哪個欄位有值，優先從有值的欄位計算
@@ -274,17 +280,17 @@ let taxRate = "";
 let $companyName, $companyBusinessId, $receivePrice, $taxFee, $salePrice = null;
 (function(){
 	const viewStepContainer = (type) => {
-		const step2Title = document.querySelector("#step-2 h2");
-		const step3Title = document.querySelector("#step-3 h2");
+		const step2Title = document.querySelector("#invoice-step-2 h2");
+		const step3Title = document.querySelector("#invoice-step-3 h2");
 
 		if (type === 'two') {
 			step2Container.classList.remove('d-block');
 			step2Container.classList.add('d-none');
-			step3Title.textContent =  "STEP2發票開立資訊";
+			if (step3Title) step3Title.textContent =  "輸入發票開立資訊";
 		} else {
 			step2Container.classList.add('d-block');
 			step2Container.classList.remove('d-none');
-			step3Title.textContent =  "STEP3發票開立資訊";
+			if (step3Title) step3Title.textContent =  "輸入發票開立資訊";
 		}
 	}
 
@@ -305,8 +311,8 @@ let $companyName, $companyBusinessId, $receivePrice, $taxFee, $salePrice = null;
 		resetCustomerValues();
 	}
 
-	const step2Container = document.getElementById('step-2');
-	const step3Container = document.getElementById('step-3');
+	const step2Container = document.getElementById('invoice-step-2');
+	const step3Container = document.getElementById('invoice-step-3');
 	const twoSectionInvoiceType = document.getElementById('two-section');
 	const twoSectionImage = document.getElementById('two-section-invoice');
 	const threeSectionInvoiceType = document.getElementById('three-section');
@@ -395,3 +401,127 @@ function calculateFromTaxAmount(event){
 	const chinesePrice = convertToChinese(priceIncludingTax);
 	setChinesePriceText(chinesePrice);
 }
+// ============================================
+// 自訂下拉選單功能（僅用於開立發票的稅率選單）
+// ============================================
+
+// 如果整合版功能.js 沒有載入，則定義本地函數
+if (typeof window.initCustomSelect === 'undefined') {
+	// 更新自訂下拉選單顯示文字
+	function updateCustomSelectDisplay(selectId, value) {
+		const button = document.getElementById(`${selectId}-button`);
+		if (!button) return;
+		
+		const textSpan = button.querySelector('.custom-select-text');
+		const options = document.querySelectorAll(`#${selectId}-options .custom-select-option`);
+		
+		// 移除所有選中狀態
+		options.forEach(option => option.classList.remove('selected'));
+		
+		// 找到對應的選項並更新顯示
+		options.forEach(option => {
+			if (option.getAttribute('data-value') === value) {
+				if (textSpan) textSpan.textContent = option.textContent;
+				option.classList.add('selected');
+			}
+		});
+	}
+
+	// 初始化自訂下拉選單
+	function initCustomSelect(selectId) {
+		const select = document.getElementById(selectId);
+		const button = document.getElementById(`${selectId}-button`);
+		const options = document.getElementById(`${selectId}-options`);
+		
+		if (!select || !button || !options) return;
+		
+		const optionElements = options.querySelectorAll('.custom-select-option');
+		
+		// 初始化顯示當前選中的值
+		const currentValue = select.value;
+		updateCustomSelectDisplay(selectId, currentValue);
+		
+		// 按鈕點擊事件：展開/收起選單
+		button.addEventListener('click', function(e) {
+			e.stopPropagation();
+			const isOpen = options.classList.contains('show');
+			
+			// 關閉所有其他下拉選單
+			document.querySelectorAll('.custom-select-options.show').forEach(opt => {
+				if (opt !== options) {
+					opt.classList.remove('show');
+					const wrapper = opt.closest('.custom-select-wrapper');
+					if (wrapper) {
+						const otherButton = wrapper.querySelector('.custom-select-button');
+						if (otherButton) otherButton.classList.remove('open');
+					}
+				}
+			});
+			
+			// 切換當前選單
+			if (isOpen) {
+				options.classList.remove('show');
+				button.classList.remove('open');
+			} else {
+				options.classList.add('show');
+				button.classList.add('open');
+			}
+		});
+		
+		// 選項點擊事件
+		optionElements.forEach(option => {
+			option.addEventListener('click', function() {
+				const value = this.getAttribute('data-value');
+				select.value = value;
+				
+				// 觸發 change 事件
+				const event = new Event('change', { bubbles: true });
+				select.dispatchEvent(event);
+				
+				// 更新顯示
+				updateCustomSelectDisplay(selectId, value);
+				
+				// 關閉選單
+				options.classList.remove('show');
+				button.classList.remove('open');
+				
+				// 調用原有的 changeTaxRate 函數
+				changeTaxRate({ target: select });
+			});
+		});
+		
+		// 點擊外部關閉選單
+		document.addEventListener('click', function(e) {
+			if (!button.contains(e.target) && !options.contains(e.target)) {
+				options.classList.remove('show');
+				button.classList.remove('open');
+			}
+		});
+		
+		// 監聽原生 select 的 change 事件（以防有其他方式改變值）
+		select.addEventListener('change', function() {
+			updateCustomSelectDisplay(selectId, this.value);
+		});
+	}
+	
+	// 導出到 window（供其他腳本使用）
+	window.initCustomSelect = initCustomSelect;
+	window.updateCustomSelectDisplay = updateCustomSelectDisplay;
+}
+
+// 頁面載入完成後初始化（使用 window 上的函數）
+document.addEventListener('DOMContentLoaded', function() {
+	const initFn = window.initCustomSelect;
+	if (initFn) {
+		// 創建一個包裝函數來處理稅率選單的特殊邏輯
+		const select = document.getElementById('tax-rate');
+		if (select) {
+			initFn('tax-rate');
+			
+			// 為稅率選單添加特殊的 change 處理
+			select.addEventListener('change', function() {
+				changeTaxRate({ target: this });
+			});
+		}
+	}
+});

@@ -225,6 +225,9 @@ body {
     cursor: pointer;            /* 滑鼠指標（手型） */
     text-align: center !important;  /* 文字置中（強制） */
     text-align-last: center !important;  /* 最後一行文字置中（強制） */
+    /* Safari & Chrome 特定文字置中樣式 */
+    -webkit-text-align: center !important;
+    direction: ltr;  /* 確保文字方向正確 */
     background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);  /* 漸層背景 */
     min-width: 400px;           /* 最小寬度 */
     width: 100%;               /* 寬度填滿 */
@@ -235,6 +238,7 @@ body {
     -moz-appearance: none;     /* Firefox 移除預設外觀 */
     background-image: none;     /* 移除背景圖片 */
     box-shadow: 0 2px 8px rgba(212, 196, 168, 0.15), 0 1px 3px rgba(212, 196, 168, 0.1);  /* 優化陰影：多層次陰影效果 */
+    box-sizing: border-box;     /* 確保寬度包含 padding 和 border，與框框一致 */
 }
 
 /* 輸入欄位和下拉選單 hover 狀態的樣式 */
@@ -244,9 +248,9 @@ body {
 .step-item select:hover,
 .input-section input:hover,
 .input-section select:hover {
-    background: linear-gradient(135deg, #f9f7f4 0%, #f0e8dd 100%);  /* hover 時背景色變亮 */
-    border-color: #c4b59a;      /* hover 時邊框顏色加深 */
-    box-shadow: 0 4px 12px rgba(212, 196, 168, 0.25), 0 2px 6px rgba(212, 196, 168, 0.15);  /* hover 時陰影加深 */
+    background: linear-gradient(135deg, #e8ddd4 0%, #d4c4a8 100%);  /* hover 時背景色改為棕色系 */
+    border-color: #c7904b;      /* hover 時邊框顏色改為深棕色 */
+    box-shadow: 0 4px 12px rgba(139, 115, 85, 0.25), 0 2px 6px rgba(139, 115, 85, 0.15);  /* hover 時陰影改為棕色系 */
     transform: translateY(-1px);  /* 輕微上移（視覺反饋） */
 }
 
@@ -264,40 +268,19 @@ body {
     background: linear-gradient(135deg, #f9f7f4 0%, #f0e8dd 100%);  /* 焦點時背景色變亮 */
 }
 
-/* 勞健保工具的下拉選單 */
-.take-care-people {
-    color: #6b5b47;
-    font-size: 1rem;
-    padding: 0.75rem 1.25rem;
-    border: 2px solid #d4c4a8;
-    border-radius: 10px;         /* 優化：從 8px 增加到 10px */
-    cursor: pointer;
-    text-align: center !important;
-    text-align-last: center !important;
-    background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
-    min-width: 400px;
-    width: 100%;
-    max-width: 500px;
-    transition: all 0.3s ease;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: none;
-    box-shadow: 0 2px 8px rgba(212, 196, 168, 0.15), 0 1px 3px rgba(212, 196, 168, 0.1);  /* 優化陰影：多層次陰影效果 */
-}
 
 /* 勞健保工具下拉選單 hover 狀態 */
 .take-care-people:hover {
-    background: linear-gradient(135deg, #f9f7f4 0%, #f0e8dd 100%);  /* hover 時背景色變亮 */
-    border-color: #c4b59a;      /* hover 時邊框顏色加深 */
-    box-shadow: 0 4px 12px rgba(212, 196, 168, 0.25), 0 2px 6px rgba(212, 196, 168, 0.15);  /* hover 時陰影加深 */
+    background: linear-gradient(135deg, #e8ddd4 0%, #d4c4a8 100%);  /* hover 時背景色改為棕色系 */
+    border-color: #8b7355;      /* hover 時邊框顏色改為深棕色 */
+    box-shadow: 0 4px 12px rgba(139, 115, 85, 0.25), 0 2px 6px rgba(139, 115, 85, 0.15);  /* hover 時陰影改為棕色系 */
     transform: translateY(-1px);  /* 輕微上移（視覺反饋） */
 }
 
 /* 勞健保工具下拉選單焦點狀態 */
 .take-care-people:focus {
     outline: none;              /* 移除預設外框 */
-    border-color: #c4b59a;      /* 焦點時邊框顏色加深 */
+    border-color: #895a01;      /* 焦點時邊框顏色加深 */
     box-shadow: 0 0 0 3px rgba(212, 196, 168, 0.3), 0 4px 12px rgba(212, 196, 168, 0.25);  /* 外發光效果 + 陰影 */
     transform: translateY(-1px);  /* 輕微上移（視覺反饋） */
     background: linear-gradient(135deg, #f9f7f4 0%, #f0e8dd 100%);  /* 焦點時背景色變亮 */
@@ -343,37 +326,282 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0;
 }
 
-/* 確保所有select元素都置中 */
-select {
-    text-align: center !important;
-}
-
-/* 強制所有select和option元素置中 */
-select, select option {
+/* 最簡單直接的方式：確保所有select元素都置中（Safari & Chrome） */
+select,
+#take-care-people,
+#tax-rate,
+.take-care-people,
+.responsive-select {
     text-align: center !important;
     text-align-last: center !important;
+    color-scheme: light;
+    direction: ltr !important;
 }
 
-/* 下拉選單選項（option）樣式優化 */
-select option {
-    background-color: #f5f1eb;   /* 選項背景色 */
-    color: #6b5b47;              /* 選項文字顏色 */
-    padding: 0.75rem 1.25rem;    /* 選項內邊距 */
-    font-size: 1rem;             /* 字體大小 */
+/* 最簡單直接的方式：確保所有option元素都置中（Safari & Chrome） */
+select option,
+#take-care-people option,
+#tax-rate option {
+    text-align: center !important;
+    text-align-last: center !important;
+    direction: ltr !important;
 }
 
-/* 下拉選單選項 hover 狀態（部分瀏覽器支援） */
+/* 最簡單直接的方式：下拉選單選項樣式（Safari & Chrome） */
+select option,
+#take-care-people option,
+#tax-rate option {
+    background-color: #f5f1eb !important;
+    color: #6b5b47 !important;
+    padding: 0.75rem 1.25rem !important;
+    font-size: 1rem !important;
+    text-align: center !important;
+    text-align-last: center !important;
+    direction: ltr !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+/* 下拉選單選項 hover 狀態（恢復樣式，嘗試在 Safari & Chrome 中顯示棕色底色） */
 select option:hover,
-select option:checked {
-    background-color: #d4c4a8 !important;  /* hover/選中時背景色 */
-    color: #5a4a3a !important;   /* hover/選中時文字顏色加深 */
-    font-weight: 600;            /* 選中時字體加粗 */
+#take-care-people option:hover,
+#tax-rate option:hover {
+    background-color: #d4c4a8 !important;
+    background: #d4c4a8 !important;
+    color: #5a4a3a !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
 }
 
-/* 針對特定ID的select元素 */
-#take-care-people, #tax-rate {
+/* 使用 :focus-within 來增強 hover 效果（當 select 獲得焦點時） */
+select:focus option:hover,
+#take-care-people:focus option:hover,
+#tax-rate:focus option:hover {
+    background-color: #d4c4a8 !important;
+    background: #d4c4a8 !important;
+    color: #5a4a3a !important;
+}
+
+/* Safari 特定：使用 -webkit- 前綴嘗試覆蓋 */
+@supports (-webkit-appearance: none) {
+    select option:hover,
+    #take-care-people option:hover,
+    #tax-rate option:hover {
+        background-color: #d4c4a8 !important;
+        background: #d4c4a8 !important;
+        color: #5a4a3a !important;
+        -webkit-appearance: none !important;
+    }
+}
+
+/* Chrome 特定：嘗試覆蓋系統預設 */
+@supports (appearance: none) {
+    select option:hover,
+    #take-care-people option:hover,
+    #tax-rate option:hover {
+        background-color: #d4c4a8 !important;
+        background: #d4c4a8 !important;
+        color: #5a4a3a !important;
+        appearance: none !important;
+    }
+}
+
+/* 最簡單直接的方式：選中狀態（Safari & Chrome） */
+select option:checked,
+select option[selected],
+#take-care-people option:checked,
+#tax-rate option:checked {
+    background-color: #d4c4a8 !important;
+    background: #d4c4a8 !important;
+    color: #5a4a3a !important;
     text-align: center !important;
     text-align-last: center !important;
+    font-weight: normal !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+/* 針對所有瀏覽器的選中狀態強制覆蓋 */
+select::-ms-value {
+    background-color: #d4c4a8 !important;
+    color: #5a4a3a !important;
+}
+
+/* 嘗試移除所有可能的選中標記圖示 */
+select option::before,
+select option::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* ============================================
+   自訂下拉選單樣式（支援所有常用瀏覽器）
+   ============================================ */
+
+/* 自訂下拉選單容器 */
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* 隱藏原生 select，但保留功能 */
+.custom-select-wrapper select,
+.custom-select-wrapper select.take-care-people,
+.custom-select-wrapper select.responsive-select,
+.custom-select-wrapper #take-care-people,
+.custom-select-wrapper #tax-rate {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    z-index: -1 !important;
+    /* 移除所有視覺樣式 */
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* 自訂下拉選單按鈕（顯示當前選項） */
+.custom-select-button {
+    color: #6b5b47;
+    font-size: 1rem;
+    height: 42px;
+    padding: 0.50rem;
+    border: 2px solid #d4c4a8;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center !important;
+    text-align-last: center !important;
+    background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(212, 196, 168, 0.15), 0 1px 3px rgba(212, 196, 168, 0.1);
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* 自訂下拉選單按鈕 hover 狀態（棕色系） */
+.custom-select-button:hover {
+    background: linear-gradient(135deg, #e8ddd4 0%, #d4c4a8 100%);
+    border-color: #8b7355;
+    box-shadow: 0 4px 12px rgba(139, 115, 85, 0.25), 0 2px 6px rgba(139, 115, 85, 0.15);
+    transform: translateY(-1px);
+}
+
+/* 自訂下拉選單按鈕焦點狀態 */
+.custom-select-button:focus {
+    outline: none;
+    border-color: #8b7355;
+    box-shadow: 0 0 0 3px rgba(212, 196, 168, 0.3), 0 4px 12px rgba(212, 196, 168, 0.25);
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #e8ddd4 0%, #d4c4a8 100%);
+}
+
+/* 自訂下拉選單按鈕展開狀態 */
+.custom-select-button.open {
+    border-radius: 10px 10px 0 0;
+    border-bottom-color: transparent;
+}
+
+
+/* 自訂下拉選單選項列表 */
+.custom-select-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #f5f1eb;
+    border: 2px solid #d4c4a8;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 12px rgba(212, 196, 168, 0.25), 0 2px 6px rgba(212, 196, 168, 0.15);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    margin-top: -2px;
+}
+
+.custom-select-options.show {
+    display: block;
+}
+
+/* 自訂下拉選單選項 */
+.custom-select-option {
+    height: 42px;                /* 固定高度 42px，與其他元素一致 */
+    padding: 0 1.25rem;         /* 只保留左右 padding */
+    font-size: 1rem;             /* 字體大小與按鈕一致 */
+    display: flex;               /* 使用 flex 確保垂直置中 */
+    align-items: center;         /* 垂直置中 */
+    justify-content: center;      /* 水平置中 */
+    cursor: pointer;
+    color: #6b5b47;
+    text-align: center;
+    transition: all 0.2s ease;
+    background-color: #f5f1eb;
+    border-bottom: 1px solid rgba(212, 196, 168, 0.2);
+    box-sizing: border-box;      /* 確保 padding 包含在高度內 */
+}
+
+.custom-select-option:last-child {
+    border-bottom: none;
+    border-radius: 0 0 8px 8px;
+}
+
+/* 自訂下拉選單選項 hover 狀態（棕色系） */
+.custom-select-option:hover {
+    background-color: #d4c4a8;
+    color: #5a4a3a;
+}
+
+/* 自訂下拉選單選項選中狀態（棕色系，無打勾） */
+.custom-select-option.selected {
+    background-color: #d4c4a8;
+    color: #5a4a3a;
+    font-weight: normal;  /* 不加粗，避免看起來像打勾 */
+}
+
+/* 自訂下拉選單滾動條樣式 */
+.custom-select-options::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-select-options::-webkit-scrollbar-track {
+    background: #f5f1eb;
+    border-radius: 4px;
+}
+
+.custom-select-options::-webkit-scrollbar-thumb {
+    background: #d4c4a8;
+    border-radius: 4px;
+}
+
+.custom-select-options::-webkit-scrollbar-thumb:hover {
+    background: #8b7355;
+}
+
+/* 稅率下拉選單特殊寬度 */
+.tax-rate-group .custom-select-wrapper {
+    width: 100px !important;
+    min-width: 100px !important;
+    max-width: 100px !important;
+}
+
+/* 扶養眷屬下拉選單樣式（確保自訂下拉選單正確顯示） */
+.dependent-input-container .custom-select-wrapper {
+    width: calc(100% - 320px);
+    min-width: 200px;
+    max-width: 400px;
+    margin-left: 20px;
 }
 
 /* ============================================
@@ -621,6 +849,7 @@ select option:checked {
     width: 100px !important;
     min-width: 100px !important;
     max-width: 100px !important;
+    box-sizing: border-box !important;  /* 確保寬度包含 padding 和 border，與框框一致 */
 }
 
 /* 稅額輸入框寬度設定（相對於父容器寬度，使用 flex 自動調整） */
@@ -836,10 +1065,13 @@ select option:checked {
 }
 
 #three-section-invoice .company-business-id {
-    font-size: 14px;           
-    top: 22%;
-    left: 17.9%;
-    letter-spacing: 2.2%;
+    font-size: 14px !important;           
+    top: 22% !important;
+    left: 18% !important;                /* 調整左邊距，對齊到統編框框 */
+    letter-spacing: 1.4em !important;    /* 基本字符間距為1.4em，讓統編文字分散顯示 */
+    width: 8ch !important;                 /* 設定寬度為8個字符寬度（統編最多8碼） */
+    text-align: left !important;           /* 左對齊 */
+    display: block !important;              /* 確保是 block 元素，讓 width 生效 */
 }
 
 #three-section-invoice .invoice-single-item-price-upper {
@@ -1140,6 +1372,8 @@ select option:checked {
     .step-inputs select {
         min-width: auto;
         width: 100%;
+        display: block;
+        margin-top: 5px;
     }
     
     .table {
@@ -1154,13 +1388,6 @@ select option:checked {
     .step-inputs .input-desc {
         width: 200px;
         float: none;
-    }
-    
-    .step-inputs input,
-    .step-inputs select {
-        display: block;
-        margin-top: 5px;
-        width: 100%;
     }
     
     .invoice-preview img {
