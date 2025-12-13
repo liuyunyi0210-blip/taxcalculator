@@ -2,9 +2,17 @@ function setCompanyInfoText(event){
 	const { id } = event.target;
 	const { value } = event.target;
 	const $companyInfo = document.querySelector(`#${creatingInvoiceType}-section-invoice .${id}`);
-	if (id === 'company-business-id' && value.length > 8) {
-		$companyInfo.textContent = value.substr(0, 8);
-	} else{
+	
+	if (id === 'company-business-id') {
+		let displayValue = value.length > 8 ? value.substr(0, 8) : value;
+		$companyInfo.innerHTML = '';
+		for (let i = 0; i < 8; i++) {
+			const digitElement = document.createElement('div');
+			digitElement.className = 'digit';
+			digitElement.textContent = i < displayValue.length ? displayValue[i] : '';
+			$companyInfo.appendChild(digitElement);
+		}
+	} else {
 		$companyInfo.textContent = value;
 	}
 }

@@ -894,6 +894,7 @@ select option::after {
     line-height: 0;                /* 移除行高，確保容器大小完全由圖片決定 */
     width: fit-content;            /* 確保容器寬度完全由內容（圖片）決定 */
     height: fit-content;          /* 確保容器高度完全由內容（圖片）決定 */
+    box-sizing: border-box;        /* 確保定位計算準確 */
 }
 
 .invoice-preview .inside-container::-webkit-scrollbar {
@@ -922,6 +923,9 @@ select option::after {
     transform: translateZ(0);    /* 觸發硬體加速，確保定位穩定 */
     will-change: transform;      /* 提示瀏覽器優化 */
     backface-visibility: hidden; /* 避免渲染問題 */
+    box-sizing: border-box;      /* 確保定位計算準確 */
+    margin: 0;                   /* 移除所有邊距，確保定位精確 */
+    padding: 0;                  /* 移除所有內距，確保定位精確 */
 }
 
 /* 二聯式發票文字位置（一律使用手機版設定） */
@@ -1065,13 +1069,20 @@ select option::after {
 }
 
 #three-section-invoice .company-business-id {
-    font-size: 14px !important;           
-    top: 22% !important;
-    left: 18% !important;                /* 調整左邊距，對齊到統編框框 */
-    letter-spacing: 1.4em !important;    /* 基本字符間距為1.4em，讓統編文字分散顯示 */
-    width: 8ch !important;                 /* 設定寬度為8個字符寬度（統編最多8碼） */
-    text-align: left !important;           /* 左對齊 */
-    display: block !important;              /* 確保是 block 元素，讓 width 生效 */
+    font-size: 13px;           /* 比照中文金額的字體大小 */
+    top: 22%;
+    left: 17.9%;                /* 與其他元素一致的定位方式 */
+    width: 50%;                 /* 比照中文金額的容器寬度 */
+    white-space: nowrap;        /* 防止換行，確保所有數字在一行內呈現 */
+    display: flex;              /* 使用 flex 佈局，確保子元素在一行 */
+    flex-wrap: nowrap;          /* 不允許換行 */
+    gap: 2%;                    /* 子元素之間的間距（比照中文金額） */
+}
+
+/* 統編每個數字元素的樣式（完全比照中文金額的 .price） */
+#three-section-invoice .company-business-id .digit {
+    width: 5.4%;                /* 每個數字寬度（比照中文金額） */
+    min-width: 0.5em;           /* 改用相對單位，隨字體大小縮放 */
 }
 
 #three-section-invoice .invoice-single-item-price-upper {
